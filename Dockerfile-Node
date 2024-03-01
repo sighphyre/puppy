@@ -1,0 +1,30 @@
+# Use an official Node.js runtime as a parent image
+FROM node:16
+
+RUN apt-get update && apt-get install -y git
+
+# Set the working directory in the container for the base
+WORKDIR /usr/src/base
+
+# Copy the Python SDK directory
+COPY ./node ./sdk
+
+# Navigate to the SDK directory
+WORKDIR /usr/src/base/sdk
+
+# Install build dependencies
+RUN yarn install
+RUN yarn build
+RUN yarn link
+
+# Copying the harness scripts and feature toggle files
+WORKDIR /usr/src/base
+COPY ./scaffolds/node/index.js ./harness/
+
+# Set the working directory to the harness directory
+WORKDIR /usr/src/base/harness
+
+RUN yarn link unleash-client
+
+# Command to run the Python application
+CMD ["node", "index.js"]

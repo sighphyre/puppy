@@ -1,0 +1,11 @@
+FROM python:3.9
+
+WORKDIR /app
+
+COPY ./main.py ./main.py
+
+COPY ./feature_toggles.json ./feature_toggles.json
+
+RUN pip install --no-cache-dir flask
+
+CMD ["python", "main.py"]

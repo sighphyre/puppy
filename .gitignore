@@ -1,3 +1,6 @@
 node
 python
+ruby
+dotnet
+testruns/*
 ./output.txt

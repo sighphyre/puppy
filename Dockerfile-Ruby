@@ -1,21 +1,20 @@
+ARG TAG=main
+
 FROM ruby:3.1
 
 RUN apt-get update && apt-get install -y git
 
-WORKDIR /usr/src/base
-
-COPY ./ruby ./sdk
-
 WORKDIR /usr/src/base/sdk
 
+COPY ./ruby .
+
+RUN git checkout $TAG
 RUN bundle install
 RUN gem build unleash-client.gemspec
 RUN gem install ./unleash-5.0.0.gem
 
-WORKDIR /usr/src/base
-
-COPY ./scaffolds/ruby/* ./harness/
-COPY ./feature_toggles.json ./harness/
 WORKDIR /usr/src/base/harness
+
+COPY ./scaffolds/ruby/* .
 
 CMD ["ruby", "main.rb"]

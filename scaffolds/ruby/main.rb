@@ -1,7 +1,7 @@
 require 'unleash'
 require 'unleash/context'
+require 'json'
 require 'logger'
-
 
 class NullLogger < Logger
   def initialize(*args)
@@ -11,28 +11,31 @@ class NullLogger < Logger
   end
 end
 
-puts "poc-ruby"
+raw_data = $stdin.read
+tests = JSON.parse(raw_data)["tests"]
+
+logger = ENV['SEIDR_DEBUG'] == 'false' ? NullLogger.new : Logger.new(STDOUT)
+
 @unleash = Unleash::Client.new(
-  url: 'https://empty/api',
-  custom_http_headers: { 'Authorization': 'empty' },
+  url: 'http://seidr-core:4242/api/',
+  custom_http_headers: { 'Authorization': 'SOME-SECRET' },
   app_name: 'bootstrap-test',
   instance_id: 'local-test-cli',
-  refresh_interval: 2,
-  disable_client: true,
-  disable_metrics: true,
-  metrics_interval: 2,
-  retry_limit: 2,
-  logger: NullLogger.new,
-  bootstrap_config: Unleash::Bootstrap::Configuration.new(file_path: "feature_toggles.json")
+  refresh_interval: 1,
+  logger: logger
 )
-
 client = Unleash::Client.new
 
-context = Unleash::Context.new
+output = {}
+tests.each do |test|
+  context = Unleash::Context.new test["context"]
 
-feature_name = "featureX"
-if client.is_enabled?(feature_name, context)
-  puts "Feature enabled"
-else
-  puts "Feature '#{feature_name}' is not enabled."
+  result = client.is_enabled?(test["toggleName"], context)
+  output[test["description"]] = {
+    "toggle_name" => test["toggleName"],
+    "result" => result,
+    "context" => test["context"]
+  }
 end
+
+puts JSON.pretty_generate(output, indent: '    ')  # Silly hack to get Ruby to format with 4 spaces like literally every other language

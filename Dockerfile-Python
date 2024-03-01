@@ -1,31 +1,19 @@
-# Use an official Python runtime as a parent image
+ARG TAG=main
+
 FROM python:3.9
 
-# Install Git
 RUN apt-get update && apt-get install -y git
 
-# Set the working directory in the container for the base
-WORKDIR /usr/src/base
-
-# Copy the Python SDK directory
-COPY ./python ./sdk
-
-# Navigate to the SDK directory
 WORKDIR /usr/src/base/sdk
 
-# Install build dependencies
-RUN pip install setuptools wheel setuptools_scm
+COPY ./python .
 
-# Build and install the UnleashClient package
+RUN git checkout $TAG
+RUN pip install setuptools wheel setuptools_scm
 RUN pip install .
 
-# Copying the harness scripts and feature toggle files
-WORKDIR /usr/src/base
-COPY ./testfile.json ./harness/
-COPY ./scaffolds/python/* ./harness/
-
-# Set the working directory to the harness directory
 WORKDIR /usr/src/base/harness
 
-# Command to run the Python application
+COPY ./scaffolds/python/* .
+
 CMD ["python", "main.py"]

@@ -1,21 +1,51 @@
 #!/bin/bash
 
+
+get_file_hash() {
+    local file_path="$1"
+
+    if [ ! -f "$file_path" ]; then
+        echo "Error: File not found at $file_path"
+        return 1
+    fi
+
+    sha256sum "$file_path" | awk '{ print substr($1, 1, length_var) }' length_var=6
+}
+
 run_container() {
-    local language=$1
+    local language_tag=$1
+    local test_file=$2
+    local features_file=$3
+
+    local file_hash
+    if ! file_hash=$(get_file_hash "$test_file"); then
+        echo "Failed to get file hash for $test_file. Exiting."
+        return 1
+    fi
+
+    mkdir -p testruns/$file_hash
+
+    # Split language and tag
+    IFS=':' read -r language tag <<< "$language_tag"
+    tag=${tag:-main} # Default to 'main' if no tag is provided, is this a good idea?
+
     local dockerfile="Dockerfile-${language^}"
-    local tag="${language}-scaffold"
-    local container_name="${language}-scaffold"
+    local image_tag="${language}-${tag}-scaffold"
+    local container_name="${language}-${tag}-scaffold"
 
     if [ -f "$dockerfile" ]; then
-        echo "Building $language container..."
-        docker build -f $dockerfile -t $tag .
+        echo "Building $language container with tag $tag..."
+        docker build --build-arg TAG=$tag -f $dockerfile -t $image_tag .
 
-        if [ "${SEIDR_DEBUG:-true}" = "true" ]; then
-            docker rm -f $container_name && cat context.json | docker run -i --name $container_name --network seidr-network $tag
-            echo "Debug mode is on, to persist the run, rerun the env var SEIDR_DEBUG=false and run the script again."
+        local debug_mode=${SEIDR_DEBUG:-true}
+        echo "Debug mode is set to $debug_mode."
+
+        # Ugh I hate this, these two branches are so similar but I keep breaking it when I collapse them
+        docker rm -f $container_name
+        if [ "$debug_mode" = "true" ]; then
+            cat "$test_file" | docker run -i -e SEIDR_DEBUG="$debug_mode" --name $container_name --network seidr-network $image_tag
         else
-            echo "Debug mode is off, output will be written to output.txt"
-            docker rm -f $container_name && cat context.json | docker run -i --name $container_name --network seidr-network $tag > output.txt
+            cat "$test_file" | docker run -i -e SEIDR_DEBUG="$debug_mode" --name $container_name --network seidr-network $image_tag > testruns/${file_hash}/${language}-${tag}-output.txt
         fi
     else
         echo "Dockerfile for $language not found."
@@ -23,9 +53,10 @@ run_container() {
     fi
 }
 
-if [ $# -eq 0 ]; then
-    echo "No language specified. Please provide a language as an argument."
+if [ $# -lt 3 ]; then
+    echo "Insufficient arguments provided."
+    echo "Usage: $0 <language[:tag]> <test_file> <features_file>"
     exit 1
 fi
 
-run_container $1
+run_container $1 $2 $3

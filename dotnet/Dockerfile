@@ -8,7 +8,7 @@ WORKDIR /usr/src/base/unleash-client-dotnet
 
 COPY ./unleash-client-dotnet .
 
-# RUN git checkout $TAG
+RUN git checkout $TAG
 RUN dotnet restore src/Unleash/Unleash.csproj
 RUN dotnet build src/Unleash/Unleash.csproj -c Release
 RUN dotnet pack src/Unleash/Unleash.csproj -c Release -o ./nupkgs

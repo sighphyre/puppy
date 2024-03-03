@@ -16,8 +16,10 @@ def load_tests():
 if os.environ.get("SEIDR_DEBUG") == "false":
     logging.disable(logging.CRITICAL + 1)
 
+unleash_api_url = os.getenv('UNLEASH_API_URL', 'http://localhost:4242/api/')
+
 unleash_client = UnleashClient(
-    url="http://seidr-core:4242/api/",
+    url=unleash_api_url,
     app_name="python-test-harness",
     instance_id="pytest_%s" % uuid.uuid4(),
     disable_metrics=True,

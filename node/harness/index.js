@@ -2,8 +2,10 @@ const { initialize } = require('unleash-client');
 const readline = require('readline');
 const { stdin: input, stdout: output } = require('process');
 
+const unleashApiUrl = process.env.UNLEASH_API_URL || 'http://localhost:4242/api/';
+
 const client = initialize({
-    url: 'http://seidr-core:4242/api/',
+    url: unleashApiUrl,
     appName: 'node-test-harness',
     customHeaders: { Authorization: 'SOME-SECRET' },
     disableMetrics: true,

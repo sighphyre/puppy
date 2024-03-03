@@ -6,7 +6,7 @@ RUN apt-get update && apt-get install -y git
 
 WORKDIR /usr/src/base/sdk
 
-COPY ./dotnet .
+COPY ./unleash-client-dotnet .
 
 # RUN git checkout $TAG
 RUN dotnet restore src/Unleash/Unleash.csproj

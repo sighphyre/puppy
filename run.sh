@@ -42,9 +42,9 @@ run_container() {
         # Ugh I hate this, these two branches are so similar but I keep breaking it when I collapse them
         docker rm -f $container_name
         if [ "$debug_mode" = "true" ]; then
-            cat "$test_file" | docker run -i -e SEIDR_DEBUG="$debug_mode" --name $container_name --network seidr-network $image_tag
+            cat "$test_file" | docker run -i -e SEIDR_DEBUG="$debug_mode" -e UNLEASH_API_URL="http://seidr-core:4242/api/" --name $container_name --network seidr-network $image_tag
         else
-            cat "$test_file" | docker run -i -e SEIDR_DEBUG="$debug_mode" --name $container_name --network seidr-network $image_tag > testruns/${file_hash}/${language}-${tag}-output.txt
+            cat "$test_file" | docker run -i -e SEIDR_DEBUG="$debug_mode" -e UNLEASH_API_URL="http://seidr-core:4242/api/" --name $container_name --network seidr-network $image_tag > testruns/${file_hash}/${language}-${tag}-output.txt
         fi
     else
         echo "Dockerfile for $language not found."

@@ -15,9 +15,10 @@ raw_data = $stdin.read
 tests = JSON.parse(raw_data)["tests"]
 
 logger = ENV['SEIDR_DEBUG'] == 'false' ? NullLogger.new : Logger.new(STDOUT)
+unleash_api_url = ENV.fetch('UNLEASH_API_URL', 'http://localhost:4242/api/')
 
 @unleash = Unleash::Client.new(
-  url: 'http://seidr-core:4242/api/',
+  url: unleash_api_url,
   custom_http_headers: { 'Authorization': 'SOME-SECRET' },
   app_name: 'bootstrap-test',
   instance_id: 'local-test-cli',

@@ -1,11 +1,16 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, make_response
 import json
+import hashlib
 
 
 app = Flask(__name__)
 
 features_data = None
 
+def generate_etag(data):
+    content_hash = hashlib.sha1(json.dumps(data).encode()).hexdigest()
+    content_length = len(json.dumps(data))
+    return f'W/"{content_length}-{content_hash}"'
 
 @app.route("/state/", methods=["POST"])
 def update_state():
@@ -20,7 +25,10 @@ def update_state():
 @app.route("/api/client/features")
 def features():
     if features_data is not None:
-        return jsonify(features_data)
+        etag = generate_etag(features_data)
+        response = make_response(jsonify(features_data))
+        response.headers['ETag'] = etag
+        return response
     else:
         return jsonify({"error": "No data available"}), 404
 

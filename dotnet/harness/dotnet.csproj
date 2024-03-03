@@ -9,7 +9,7 @@
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-      <PackageReference Include="Unleash.Client" Version="*" />
+    <PackageReference Include="Unleash.Client" Version="1.0.0" />
   </ItemGroup>
 
 </Project>

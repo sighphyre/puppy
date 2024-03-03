@@ -14,6 +14,6 @@ RUN pip install .
 
 WORKDIR /usr/src/base/harness
 
-COPY ./runner/* .
+COPY ./harness/* .
 
 CMD ["python", "main.py"]

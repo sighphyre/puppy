@@ -15,8 +15,8 @@ RUN dotnet pack src/Unleash/Unleash.csproj -c Release -o ./nupkgs --no-build
 
 WORKDIR /usr/src/base/harness
 
-COPY ./scaffolds/dotnet/dotnet.csproj .
-COPY ./scaffolds/dotnet/Program.cs .
+COPY ./harness/dotnet.csproj .
+COPY ./harness/Program.cs .
 
 RUN dotnet restore
 RUN dotnet build

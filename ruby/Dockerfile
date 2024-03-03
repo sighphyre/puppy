@@ -15,6 +15,6 @@ RUN gem install ./unleash-5.0.0.gem
 
 WORKDIR /usr/src/base/harness
 
-COPY ./runner/* .
+COPY ./harness/* .
 
 CMD ["ruby", "main.rb"]

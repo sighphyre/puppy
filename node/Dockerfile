@@ -15,7 +15,7 @@ RUN yarn link
 
 WORKDIR /usr/src/base/harness
 
-COPY ./runner/* .
+COPY ./harness/* .
 
 RUN yarn link unleash-client
 

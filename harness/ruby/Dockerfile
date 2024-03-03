@@ -6,7 +6,7 @@ RUN apt-get update && apt-get install -y git
 
 WORKDIR /usr/src/base/sdk
 
-COPY ./ruby .
+COPY ./unleash-client-ruby .
 
 RUN git checkout $TAG
 RUN bundle install
@@ -15,6 +15,6 @@ RUN gem install ./unleash-5.0.0.gem
 
 WORKDIR /usr/src/base/harness
 
-COPY ./scaffolds/ruby/* .
+COPY ./runner/* .
 
 CMD ["ruby", "main.rb"]

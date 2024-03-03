@@ -1,10 +1,8 @@
-node
-python
-ruby
-dotnet
+unleash-client-*
 testruns/*
 ./output.txt
 .vscode
 
+**/Debug
 **/bin
 **/obj

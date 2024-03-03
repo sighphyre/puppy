@@ -28,13 +28,14 @@ run_container() {
     IFS=':' read -r language tag <<< "$language_tag"
     tag=${tag:-main} # Default to 'main' if no tag is provided, is this a good idea?
 
-    local dockerfile="Dockerfile-${language^}"
+    local dockerfile_dir="harness/${language_tag}"
+    local dockerfile="${dockerfile_dir}/Dockerfile"
     local image_tag="${language}-${tag}-scaffold"
     local container_name="${language}-${tag}-scaffold"
 
     if [ -f "$dockerfile" ]; then
         echo "Building $language container with tag $tag..."
-        docker build --progress=plain --build-arg TAG=$tag -f $dockerfile -t $image_tag .
+        docker build --build-arg TAG=$tag -f $dockerfile -t $image_tag $dockerfile_dir
 
         local debug_mode=${SEIDR_DEBUG:-true}
         echo "Debug mode is set to $debug_mode."

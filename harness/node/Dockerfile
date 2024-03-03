@@ -6,7 +6,7 @@ RUN apt-get update && apt-get install -y git
 
 WORKDIR /usr/src/base/sdk
 
-COPY ./node .
+COPY ./unleash-client-node .
 
 RUN git checkout $TAG
 RUN yarn install
@@ -15,7 +15,7 @@ RUN yarn link
 
 WORKDIR /usr/src/base/harness
 
-COPY ./scaffolds/node/index.js .
+COPY ./runner/* .
 
 RUN yarn link unleash-client
 

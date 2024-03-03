@@ -25,7 +25,6 @@ run_container() {
 
     mkdir -p testruns/$file_hash
 
-    # Split language and tag
     IFS=':' read -r language tag <<< "$language_tag"
     tag=${tag:-main} # Default to 'main' if no tag is provided, is this a good idea?
 
@@ -35,7 +34,7 @@ run_container() {
 
     if [ -f "$dockerfile" ]; then
         echo "Building $language container with tag $tag..."
-        docker build --build-arg TAG=$tag -f $dockerfile -t $image_tag .
+        docker build --progress=plain --build-arg TAG=$tag -f $dockerfile -t $image_tag .
 
         local debug_mode=${SEIDR_DEBUG:-true}
         echo "Debug mode is set to $debug_mode."

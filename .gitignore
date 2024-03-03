@@ -4,3 +4,7 @@ ruby
 dotnet
 testruns/*
 ./output.txt
+.vscode
+
+**/bin
+**/obj

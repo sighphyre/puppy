@@ -14,6 +14,15 @@ import (
 	"strings"
 )
 
+type NoOpListener struct{}
+
+func (l *NoOpListener) OnReady()                                {}
+func (l *NoOpListener) OnError(err error)                       {}
+func (l *NoOpListener) OnWarning(warning error)                 {}
+func (l *NoOpListener) OnCount(name string, enabled bool)       {}
+func (l *NoOpListener) OnSent(payload unleash.MetricsData)      {}
+func (l *NoOpListener) OnRegistered(payload unleash.ClientData) {}
+
 type Test struct {
 	Description    string          `json:"description"`
 	Context        context.Context `json:"context"`
@@ -32,7 +41,7 @@ func init() {
 	}
 
 	unleash.Initialize(
-		unleash.WithListener(&unleash.DebugListener{}),
+		unleash.WithListener(&NoOpListener{}),
 		unleash.WithAppName("my-application"),
 		unleash.WithUrl(unleashURL),
 		unleash.WithCustomHeaders(http.Header{"Authorization": {"<API token>"}}),
@@ -67,7 +76,6 @@ func main() {
 
 	for _, test := range testData.Tests {
 		isEnabled := unleash.IsEnabled(test.ToggleName, unleash.WithContext(test.Context))
-		fmt.Printf("Test: %s, Expected: %v, Result: %v\n", test.Description, test.ExpectedResult, isEnabled)
 		results[test.Description] = map[string]interface{}{
 			"toggleName":   test.ToggleName,
 			"actualResult": isEnabled,

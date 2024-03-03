@@ -33,7 +33,6 @@ client.on('ready', () => {
             results[description] = {
                 toggleName,
                 result,
-                context
             };
         });
 

@@ -77,9 +77,8 @@ func main() {
 	for _, test := range testData.Tests {
 		isEnabled := unleash.IsEnabled(test.ToggleName, unleash.WithContext(test.Context))
 		results[test.Description] = map[string]interface{}{
-			"toggleName":   test.ToggleName,
-			"actualResult": isEnabled,
-			"context":      test.Context,
+			"toggleName": test.ToggleName,
+			"result":     isEnabled,
 		}
 	}
 

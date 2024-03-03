@@ -94,9 +94,8 @@ public class App {
                 boolean enabled = unleash.isEnabled(toggleName, context);
 
                 ObjectNode testResult = outputMapper.createObjectNode();
-                testResult.put("toggle_name", toggleName);
+                testResult.put("toggleName", toggleName);
                 testResult.put("result", enabled);
-                testResult.put("context", testNode.get("context"));
 
                 output.put(testDescription, testResult);
             }

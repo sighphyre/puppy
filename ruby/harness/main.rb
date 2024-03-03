@@ -33,9 +33,8 @@ tests.each do |test|
 
   result = client.is_enabled?(test["toggleName"], context)
   output[test["description"]] = {
-    "toggle_name" => test["toggleName"],
+    "toggleName" => test["toggleName"],
     "result" => result,
-    "context" => test["context"]
   }
 end
 

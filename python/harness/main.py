@@ -43,7 +43,6 @@ for test in tests:
     output[description] = {
         "toggleName": toggle_name,
         "result": result,
-        "context": context,
     }
 
 print(json.dumps(output, indent=4))

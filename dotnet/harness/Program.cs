@@ -58,9 +58,8 @@ class Program
                 var result = unleash.IsEnabled(test.ToggleName, test.Context);
                 output[test.Description] = new Dictionary<string, object>
                 {
-                    { "toggle_name", test.ToggleName },
+                    { "toggleName", test.ToggleName },
                     { "result", result },
-                    { "context", test.Context }
                 };
             }
         }

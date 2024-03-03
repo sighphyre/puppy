@@ -51,7 +51,6 @@ foreach ($tests as $test) {
     $output[$test["description"]] = [
         "toggle_name" => $test["toggleName"],
         "result" => $result,
-        "context" => $test["context"]
     ];
 }
 echo json_encode($output, JSON_PRETTY_PRINT);

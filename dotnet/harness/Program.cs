@@ -49,21 +49,25 @@ class Program
 
         IUnleash unleash = await unleashFactory.CreateClientAsync(settings, synchronousInitialization: true);
 
+        var output = new Dictionary<string, Dictionary<string, object>>();
+
         if (data.TryGetValue("tests", out var tests))
         {
             foreach (var test in tests)
             {
-
-                // print out the toggle name and context
-                Console.WriteLine($"ToggleName: {test.ToggleName}, Context: {test.Context}");
-
-                var awesome = unleash.IsEnabled(test.ToggleName, test.Context);
-                Console.WriteLine($"Result {awesome}");
+                var result = unleash.IsEnabled(test.ToggleName, test.Context);
+                output[test.Description] = new Dictionary<string, object>
+                {
+                    { "toggle_name", test.ToggleName },
+                    { "result", result },
+                    { "context", test.Context }
+                };
             }
         }
         else
         {
-            Console.WriteLine("The 'tests' key is missing or not in the expected format.");
+            throw new Exception("Input was found but missing 'tests' key.");
         }
+        Console.WriteLine(JsonConvert.SerializeObject(output, Formatting.Indented));
     }
 }

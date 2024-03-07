@@ -7,6 +7,7 @@ import os
 from os import path
 import sys
 import uuid
+import time
 
 
 def load_tests():
@@ -39,10 +40,19 @@ for test in tests:
     expected_result = test["expectedResult"]
 
     result = unleash_client.is_enabled(toggle_name, context)
+    bench = test.get("bench", 1)
+
+    last_result = False
+
+    start = time.perf_counter()
+    for i in range(bench):
+        last_result = unleash_client.is_enabled(toggle_name, context)
+    end = time.perf_counter()
 
     output[description] = {
         "toggleName": toggle_name,
-        "result": result,
+        "lastResult": result,
+        "time": (end - start)* 1000,
     }
 
 print(json.dumps(output, indent=4))

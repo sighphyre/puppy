@@ -49,7 +49,7 @@ run_container() {
 
     if [ -f "$dockerfile" ]; then
         echo "Building $language container with tag $tag..."
-        docker build --build-arg TAG=$tag -f $dockerfile -t $image_tag $language_tag
+        # docker build --build-arg TAG=$tag -f $dockerfile -t $image_tag $language_tag
 
         local debug_mode=${SEIDR_DEBUG:-true}
         echo "Debug mode is set to $debug_mode."
@@ -59,7 +59,7 @@ run_container() {
         if [ "$debug_mode" = "true" ]; then
             cat "$test_file" | docker run -i -e SEIDR_DEBUG="$debug_mode" -e UNLEASH_API_URL="http://seidr-core:4242/api/" --name $container_name --network seidr-network $image_tag
         else
-            cat "$test_file" | docker run -i -e SEIDR_DEBUG="$debug_mode" -e UNLEASH_API_URL="http://seidr-core:4242/api/" --name $container_name --network seidr-network $image_tag > ${destination_path}/${language}-${tag}-output.txt
+            cat "$test_file" | docker run -i -e SEIDR_DEBUG="$debug_mode" -e UNLEASH_API_URL="http://seidr-core:4242/api/" --name $container_name --network seidr-network $image_tag > ${destination_path}/${language}-${tag}-output.json
         fi
     else
         echo "Dockerfile for $language not found."

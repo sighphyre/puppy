@@ -1,57 +1,62 @@
 {
     "tests": [
-        {
-            "description": "F9.globalSegmentOn should be enabled",
-            "context": {
-                "properties": {
-                    "version": "1.2.2"
-                }
-            },
-            "toggleName": "F9.globalSegmentOn",
-            "expectedResult": true
+      {
+        "description": "F9.globalSegmentOn should be enabled",
+        "context": {
+          "properties": {
+            "version": "1.2.2"
+          }
         },
-        {
-            "description": "F9.globalSegmentOff should be disabled",
-            "context": {
-                "properties": {
-                    "version": "3.2.2"
-                }
-            },
-            "toggleName": "F9.globalSegmentOff",
-            "expectedResult": false
+        "toggleName": "F9.globalSegmentOn",
+        "expectedResult": true,
+        "bench": 1000000
+      },
+      {
+        "description": "F9.globalSegmentOff should be disabled",
+        "context": {
+          "properties": {
+            "version": "3.2.2"
+          }
         },
-        {
-            "description": "F9.globalSegmentAndConstraint should be enabled",
-            "context": {
-                "properties": {
-                    "version": "1.2.2"
-                }
-            },
-            "toggleName": "F9.globalSegmentAndConstraint",
-            "expectedResult": true
+        "toggleName": "F9.globalSegmentOff",
+        "expectedResult": true,
+        "bench": 1000000
+      },
+      {
+        "description": "F9.globalSegmentAndConstraint should be enabled",
+        "context": {
+          "properties": {
+            "version": "1.2.2"
+          }
         },
-        {
-            "description": "F9.withMissingSegment should force evaluation to false",
-            "context": {
-                "properties": {
-                    "version": "1.2.2"
-                }
-            },
-            "toggleName": "F9.withMissingSegment",
-            "expectedResult": false
+        "toggleName": "F9.globalSegmentAndConstraint",
+        "expectedResult": true,
+        "bench": 1000000
+      },
+      {
+        "description": "F9.withMissingSegment should force evaluation to false",
+        "context": {
+          "properties": {
+            "version": "1.2.2"
+          }
         },
-        {
-            "description": "F9.withSeveralConstraintsAndSegments should be enabled",
-            "context": {
-                "properties": {
-                    "version": "1.2.2",
-                    "customNumber": "3.14",
-                    "customName": "Pie",
-                    "slicesLeft": "4"
-                }
-            },
-            "toggleName": "F9.withSeveralConstraintsAndSegments",
-            "expectedResult": true
-        }
+        "toggleName": "F9.withMissingSegment",
+        "expectedResult": true,
+        "bench": 1000000
+      },
+      {
+        "description": "F9.withSeveralConstraintsAndSegments should be enabled",
+        "context": {
+          "properties": {
+            "version": "1.2.2",
+            "customNumber": "3.14",
+            "customName": "Pie",
+            "slicesLeft": "7"
+          }
+        },
+        "toggleName": "F9.withSeveralConstraintsAndSegments",
+        "expectedResult": true,
+        "bench": 1000000
+      }
     ]
-}
+  }

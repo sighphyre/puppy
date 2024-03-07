@@ -31,10 +31,21 @@ output = {}
 tests.each do |test|
   context = Unleash::Context.new test["context"]
 
-  result = client.is_enabled?(test["toggleName"], context)
+  bench = test["bench"] || 1
+
+  first = Time.now
+  last_result = false
+  for i in 1..bench
+    last_result = client.is_enabled?(test["toggleName"], context)
+  end
+
+  last = Time.now
+
   output[test["description"]] = {
     "toggleName" => test["toggleName"],
-    "result" => result,
+    "lastResult" => last_result,
+    "time": (last - first) * 1000
+
   }
 end
 

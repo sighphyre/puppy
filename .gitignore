@@ -1,8 +1,15 @@
 unleash-client-*
+yggdrasil
 testruns/*
-./output.txt
+split-spec
 .vscode
 
+
+**/target
+**/node_modules
 **/Debug
 **/bin
 **/obj
+
+
+./output.txt

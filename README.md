@@ -11,7 +11,7 @@ A process affectionately referred to by myself as "Poking it with a stick."
 
 The existing SDK validation strategy is made of up of two components, both with limitations.
 
-The first is client specification tests, which define how a toggle should execute. These are very rigid tests, since they're defined outside the SDK and consumed via their semantic version. Updating this of tests needs consideration and forethought, since they're... well... our spec. This means they're a poor choice for understanding a wide range of behaviors for things like local testing or understanding the scope of bugs across SDKs. They also don't provide insight into how the HTTP layer or metrics work.
+The first is client specification tests, which define how a toggle should execute. These are very rigid tests, since they're defined outside the SDK and consumed via their semantic version. Updating these tests needs consideration and forethought, since they're... well... our spec. This means they're a poor choice for understanding a wide range of behaviors for things like local testing or understanding the scope of bugs across SDKs. They also don't provide insight into how the HTTP layer or metrics work.
 
 The second is the unit and integration tests largely written by original authors or maintainers. These tests cover behaviors not well covered by the client spec and generally provide excellent coverage but they're not standard and there's no way of asserting behaviors like metrics across a range of SDKs or versions.
 

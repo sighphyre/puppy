@@ -4,7 +4,7 @@ Puppy is a portable tool for analyzing Unleash SDK evaluation and metric logic a
 
 A process affectionately referred to by myself as "Poking it with a stick."
 
-![Puppy](./Puppy.png)
+![Puppy](./Puppy_white.png)
 
 ### Why?
 

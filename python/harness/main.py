@@ -14,7 +14,7 @@ def load_tests():
     return json.loads(sys.stdin.read())
 
 
-if os.environ.get("SEIDR_DEBUG") == "false":
+if os.environ.get("PUPPY_DEBUG") == "false":
     logging.disable(logging.CRITICAL + 1)
 
 unleash_api_url = os.getenv('UNLEASH_API_URL', 'http://localhost:4242/api/')
@@ -23,9 +23,9 @@ unleash_client = UnleashClient(
     url=unleash_api_url,
     app_name="python-test-harness",
     instance_id="pytest_%s" % uuid.uuid4(),
-    disable_metrics=True,
-    disable_registration=True,
     environment="default",
+    metrics_interval=1,
+    custom_headers={'Authorization': 'python:test.token'},
 )
 
 unleash_client.initialize_client()
@@ -55,4 +55,6 @@ for test in tests:
         "time": (end - start)* 1000,
     }
 
+
+time.sleep(2)
 print(json.dumps(output, indent=4))

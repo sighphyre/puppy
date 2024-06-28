@@ -9,7 +9,7 @@
         },
         "toggleName": "F9.globalSegmentOn",
         "expectedResult": true,
-        "bench": 1000000
+        "bench": 1
       },
       {
         "description": "F9.globalSegmentOff should be disabled",
@@ -20,7 +20,7 @@
         },
         "toggleName": "F9.globalSegmentOff",
         "expectedResult": true,
-        "bench": 1000000
+        "bench": 1
       },
       {
         "description": "F9.globalSegmentAndConstraint should be enabled",
@@ -31,7 +31,7 @@
         },
         "toggleName": "F9.globalSegmentAndConstraint",
         "expectedResult": true,
-        "bench": 1000000
+        "bench": 1
       },
       {
         "description": "F9.withMissingSegment should force evaluation to false",
@@ -42,7 +42,7 @@
         },
         "toggleName": "F9.withMissingSegment",
         "expectedResult": true,
-        "bench": 1000000
+        "bench": 1
       },
       {
         "description": "F9.withSeveralConstraintsAndSegments should be enabled",
@@ -56,7 +56,7 @@
         },
         "toggleName": "F9.withSeveralConstraintsAndSegments",
         "expectedResult": true,
-        "bench": 1000000
+        "bench": 1
       }
     ]
   }

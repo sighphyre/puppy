@@ -20,11 +20,11 @@ get_file_hash() {
 run_container() {
     local language_tag=$1
     local test_file=$2
-    local seidr_url="http://localhost:4242/api/client/features"
+    local puppy_url="http://localhost:4242/api/client/features"
 
     local features_hash
-    if ! features_hash=$(get_features_hash "$seidr_url"); then
-        echo "Failed to get features from $seidr_url. Is Seidr running?."
+    if ! features_hash=$(get_features_hash "$puppy_url"); then
+        echo "Failed to get features from $puppy_url. Is Puppy running?."
         return 1
     fi
 
@@ -37,7 +37,7 @@ run_container() {
 
     mkdir -p "$destination_path"
 
-    curl -s "$seidr_url" -o "testruns/$features_hash/client_features.json"
+    curl -s "$puppy_url" -o "testruns/$features_hash/client_features.json"
     cp "$test_file" "$destination_path/test_file.json"
 
     IFS=':' read -r language tag <<< "$language_tag"
@@ -49,17 +49,17 @@ run_container() {
 
     if [ -f "$dockerfile" ]; then
         echo "Building $language container with tag $tag..."
-        # docker build --build-arg TAG=$tag -f $dockerfile -t $image_tag $language_tag
+        docker build --build-arg TAG=$tag -f $dockerfile -t $image_tag $language_tag
 
-        local debug_mode=${SEIDR_DEBUG:-true}
+        local debug_mode=${PUPPY_DEBUG:-true}
         echo "Debug mode is set to $debug_mode."
 
         # Ugh I hate this, these two branches are so similar but I keep breaking it when I collapse them
         docker rm -f $container_name
         if [ "$debug_mode" = "true" ]; then
-            cat "$test_file" | docker run -i -e SEIDR_DEBUG="$debug_mode" -e UNLEASH_API_URL="http://seidr-core:4242/api/" --name $container_name --network seidr-network $image_tag
+            cat "$test_file" | docker run -i -e PUPPY_DEBUG="$debug_mode" -e UNLEASH_API_URL="http://puppy-core:4242/api/" --name $container_name --network puppy-network $image_tag
         else
-            cat "$test_file" | docker run -i -e SEIDR_DEBUG="$debug_mode" -e UNLEASH_API_URL="http://seidr-core:4242/api/" --name $container_name --network seidr-network $image_tag > ${destination_path}/${language}-${tag}-output.json
+            cat "$test_file" | docker run -i -e PUPPY_DEBUG="$debug_mode" -e UNLEASH_API_URL="http://puppy-core:4242/api/" --name $container_name --network puppy-network $image_tag > ${destination_path}/${language}-${tag}-output.json
         fi
     else
         echo "Dockerfile for $language not found."

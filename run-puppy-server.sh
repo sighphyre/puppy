@@ -1,6 +1,6 @@
 #!/bin/bash
 
-network_name="seidr-network"
+network_name="puppy-network"
 
 
 create_network() {
@@ -15,6 +15,6 @@ create_network() {
 
 create_network $network_name
 
-docker build --no-cache -f Dockerfile-Seidr -t seidr-core .
+docker build --no-cache -f Dockerfile-Puppy -t puppy-core .
 
-docker rm -f seidr-core && docker run -p 4242:4242 --name seidr-core --network seidr-network seidr-core
+docker rm -f puppy-core && docker run -p 4242:4242 --name puppy-core --network puppy-network puppy-core

@@ -14,7 +14,7 @@ end
 raw_data = $stdin.read
 tests = JSON.parse(raw_data)["tests"]
 
-logger = ENV['SEIDR_DEBUG'] == 'false' ? NullLogger.new : Logger.new(STDOUT)
+logger = ENV['PUPPY_DEBUG'] == 'false' ? NullLogger.new : Logger.new(STDOUT)
 unleash_api_url = ENV.fetch('UNLEASH_API_URL', 'http://localhost:4242/api/')
 
 @unleash = Unleash::Client.new(

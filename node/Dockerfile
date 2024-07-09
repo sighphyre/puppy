@@ -4,9 +4,13 @@ FROM node:16
 
 RUN apt-get update && apt-get install -y git
 
-WORKDIR /usr/src/base/sdk
+WORKDIR /usr/src/base/sdk/unleash-client-node
 
 COPY ./unleash-client-node .
+
+RUN yarn link
+
+WORKDIR /usr/src/base/sdk
 
 RUN git checkout $TAG
 RUN yarn install

@@ -43,7 +43,7 @@ run_container() {
     IFS=':' read -r language tag <<< "$language_tag"
     tag=${tag:-main} # Default to 'main' if no tag is provided, is this a good idea?
 
-    local dockerfile="${language_tag}/Dockerfile"
+    local dockerfile="${language}/Dockerfile"
     local image_tag="${language}-${tag}-scaffold"
     local container_name="${language}-${tag}-scaffold"
 

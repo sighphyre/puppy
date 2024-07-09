@@ -9,8 +9,6 @@ const client = initialize({
     url: unleashApiUrl,
     appName: 'node-test-harness',
     customHeaders: { Authorization: unleashApiKey },
-    disableMetrics: true,
-    disableRegistration: true,
     environment: 'default',
 });
 
@@ -28,27 +26,9 @@ client.on('ready', () => {
         const results = {};
 
         tests.forEach(test => {
-            const { toggleName, context, description, _expectedResult, bench = 1 } = test;
+            const { toggleName, context, description, _expectedResult } = test;
 
-            const start = performance.now();
-            let lastEnabled = false;
-            for (let i = 0; i < bench; i++) {
-                lastEnabled = client.isEnabled(toggleName, context);
-                // if (i % 100000 === 0) {
-                //     const memoryUsage = process.memoryUsage();
-                //     console.clear();
-                //     outputBuffer = `Memory Usage: \n`;
-                //     outputBuffer += `- Test: ${description}\n`;
-                //     outputBuffer += `- RSS (Resident Set Size): ${memoryUsage.rss / 1024 / 1024} MB\n`;
-                //     outputBuffer += `- Total Heap Size: ${memoryUsage.heapTotal / 1024 / 1024} MB\n`;
-                //     outputBuffer += `- Used Heap Size: ${memoryUsage.heapUsed / 1024 / 1024} MB\n`;
-                //     outputBuffer += `- External Memory: ${memoryUsage.external / 1024 / 1024} MB\n`;
-                //     outputBuffer += `- Array Buffers: ${memoryUsage.arrayBuffers / 1024 / 1024} MB\n`;
-                //     console.log(outputBuffer);
-                // }
-            }
-
-            const time = performance.now() - start; //milliseconds
+            let lastEnabled = client.isEnabled(toggleName, context);;
 
             results[description] = {
                 toggleName,

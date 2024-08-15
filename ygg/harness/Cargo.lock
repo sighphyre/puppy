@@ -106,9 +106,9 @@ checksum = "baf1de4339761588bc0619e3cbc0120ee582ebb74b53b4efbf79117bd2da40fd"
 
 [[package]]
 name = "chrono"
-version = "0.4.34"
+version = "0.4.38"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "5bc015644b92d5890fab7489e49d21f879d5c990186827d42ec511919404f38b"
+checksum = "a21f936df1771bf62b77f047b726c4625ff2e8aa607c01ec06e5a05bd8463401"
 dependencies = [
  "android-tzdata",
  "iana-time-zone",
@@ -1321,9 +1321,9 @@ checksum = "d4c87d22b6e3f4a18d4d40ef354e97c90fcb14dd91d7dc0aa9d8a1172ebf7202"
 
 [[package]]
 name = "unleash-types"
-version = "0.11.0"
+version = "0.13.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b6db70f5a700ad12ebb8ab08483f81eea23de296d5a094d2164e442a5b701d80"
+checksum = "2ec98d6933713aaffd77d7dc2663601b97dd893d9a1e12c44c1d971fe507c9f2"
 dependencies = [
  "chrono",
  "derive_builder",
@@ -1333,7 +1333,7 @@ dependencies = [
 
 [[package]]
 name = "unleash-yggdrasil"
-version = "0.11.0"
+version = "0.13.0"
 dependencies = [
  "chrono",
  "convert_case",

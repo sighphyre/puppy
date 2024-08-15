@@ -30,8 +30,13 @@ struct TestOutput {
 
 fn fetch_feature_toggles() -> ClientFeatures {
     let client = reqwest::blocking::Client::new();
+
+    let base_api = std::env::var("UNLEASH_API_URL")
+        .unwrap_or_else(|_| "http://localhost:4242/api/".to_string());
+    let unleash_api_url = format!("{}/client/features", base_api);
+
     let response = client
-        .get("http://localhost:4242/api/client/features")
+        .get(unleash_api_url)
         .header("Authorization", "some-key")
         .send()
         .expect("Failed to fetch features, test cannot continue");

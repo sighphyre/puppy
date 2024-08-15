@@ -1,6 +1,6 @@
 ARG TAG=main
 
-FROM rust:1.76
+FROM rust:1.80
 
 RUN apt-get update && apt-get install -y git
 
@@ -12,10 +12,10 @@ RUN cargo build --release
 
 WORKDIR /usr/src/base/harness
 
-COPY ./harness/* .
+COPY ./harness .
 
-# RUN cargo build --release
+RUN cargo build --release
 
-# WORKDIR /usr/src/base/harness/target/release
+WORKDIR /usr/src/base/harness/target/release
 
-# CMD ["./harness"]
+CMD ["./harness"]

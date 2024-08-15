@@ -32,8 +32,7 @@ client.on('ready', () => {
 
             results[description] = {
                 toggleName,
-                lastEnabled,
-                time
+                lastEnabled
             };
         });
 

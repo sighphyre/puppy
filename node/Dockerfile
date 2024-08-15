@@ -10,7 +10,7 @@ COPY ./unleash-client-node .
 
 RUN yarn link
 
-WORKDIR /usr/src/base/sdk
+WORKDIR /usr/src/base/sdk/unleash-client-node
 
 RUN git checkout $TAG
 RUN yarn install

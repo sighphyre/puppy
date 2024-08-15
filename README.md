@@ -26,6 +26,22 @@ Because of these limitations, it becomes quite difficult to achieve a few very n
 
 In practice these things are rarely needed but when you do need them it's great to have some of the details taken care of for you.
 
+### Quickstart
+
+Start the puppy server:
+
+`./run-puppy-server.sh`
+
+Hydrate the server with some feature toggles:
+
+`./hydrate.sh feature_toggles.json`
+
+The `feature_toggles.json` file can be swapped out for any valid response from `/api/client/features` from an Unleash or Edge server.
+
+Run a container. For example Python:
+
+`./run-test.sh python ./testfile.json`
+
 ### What's Puppy
 
 Puppy is not a testing framework. Puppy is an evaluation framework. It will tell you information about how an SDK behaves but it will not make judgement calls. However, that information can be outputted in a format that can be used as a test.

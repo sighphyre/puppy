@@ -59,7 +59,7 @@ run_container() {
         if [ "$debug_mode" = "true" ]; then
             cat "$test_file" | docker run -i -e PUPPY_DEBUG="$debug_mode" -e UNLEASH_API_URL="http://puppy-core:4242/api/" --name $container_name --network puppy-network $image_tag
         else
-            cat "$test_file" | docker run -i -e PUPPY_DEBUG="$debug_mode" -e UNLEASH_API_URL="http://puppy-core:4242/api/" --name $container_name --network puppy-network $image_tag > ${destination_path}/${language}-${tag}-output.json
+            cat "$test_file" | docker run -i -e PUPPY_DEBUG="$debug_mode" -e UNLEASH_API_URL="http://puppy-core:4242/api/" --name $container_name --network puppy-network $image_tag | jq > ${destination_path}/${language}-${tag}-output.json
         fi
     else
         echo "Dockerfile for $language not found."

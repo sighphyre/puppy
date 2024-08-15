@@ -44,15 +44,12 @@ for test in tests:
 
     last_result = False
 
-    start = time.perf_counter()
     for i in range(bench):
         last_result = unleash_client.is_enabled(toggle_name, context)
-    end = time.perf_counter()
 
     output[description] = {
         "toggleName": toggle_name,
         "lastResult": result,
-        "time": (end - start)* 1000,
     }
 
 

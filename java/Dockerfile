@@ -6,7 +6,7 @@ RUN apt-get update && apt-get install -y git
 
 RUN apt-get install -y maven
 
-ARG GRADLE_VERSION=8.6
+ARG GRADLE_VERSION=8.10
 RUN wget https://services.gradle.org/distributions/gradle-${GRADLE_VERSION}-bin.zip -P /tmp
 RUN unzip -d /opt/gradle /tmp/gradle-${GRADLE_VERSION}-bin.zip
 ENV GRADLE_HOME=/opt/gradle/gradle-${GRADLE_VERSION}

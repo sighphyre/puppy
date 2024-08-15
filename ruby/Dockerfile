@@ -11,7 +11,7 @@ COPY ./unleash-client-ruby .
 RUN git checkout $TAG
 RUN bundle install
 RUN gem build unleash-client.gemspec
-RUN gem install ./unleash-5.0.0.gem
+RUN gem install ./unleash-5.0.5.gem
 
 WORKDIR /usr/src/base/harness
 

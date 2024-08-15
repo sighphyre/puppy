@@ -2,7 +2,7 @@
 ARG TAG=main
 
 # Use an official PHP runtime as a parent image
-FROM php:8.2-cli
+FROM php:8.3-cli
 
 ENV COMPOSER_ALLOW_SUPERUSER 1
 

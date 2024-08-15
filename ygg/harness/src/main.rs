@@ -23,9 +23,8 @@ struct TestSuite {
 
 #[derive(Serialize, Deserialize, Debug)]
 struct TestOutput {
+    result: bool,
     toggleName: String,
-    lastEnabled: bool,
-    time: u128,
 }
 
 fn fetch_feature_toggles() -> ClientFeatures {
@@ -33,7 +32,8 @@ fn fetch_feature_toggles() -> ClientFeatures {
 
     let base_api = std::env::var("UNLEASH_API_URL")
         .unwrap_or_else(|_| "http://localhost:4242/api/".to_string());
-    let unleash_api_url = format!("{}/client/features", base_api);
+
+    let unleash_api_url = format!("{}client/features", base_api);
 
     let response = client
         .get(unleash_api_url)
@@ -66,26 +66,18 @@ fn main() {
     let mut test_output = HashMap::new();
 
     for test in suite.tests.iter() {
-        let mut last = false;
-
-        let start = std::time::Instant::now();
-
-        for _ in 0..test.bench.unwrap_or(1) {
-            last = engine.is_enabled(&test.toggleName, &test.context, &None);
-        }
-
+        let result = engine.is_enabled(&test.toggleName, &test.context, &None);
         test_output.insert(
             test.description.clone(),
             TestOutput {
+                result,
                 toggleName: test.toggleName.clone(),
-                lastEnabled: last,
-                time: start.elapsed().as_millis(),
             },
         );
     }
 
     println!(
         "{}",
-        serde_json::to_string(&test_output).expect("Failed to materialize output")
+        serde_json::to_string_pretty(&test_output).expect("Failed to materialize output")
     );
 }

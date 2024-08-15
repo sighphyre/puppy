@@ -28,11 +28,11 @@ client.on('ready', () => {
         tests.forEach(test => {
             const { toggleName, context, description, _expectedResult } = test;
 
-            let lastEnabled = client.isEnabled(toggleName, context);;
+            let result = client.isEnabled(toggleName, context);;
 
             results[description] = {
-                toggleName,
-                lastEnabled
+                result,
+                toggleName
             };
         });
 

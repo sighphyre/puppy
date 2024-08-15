@@ -8,14 +8,14 @@ WORKDIR /usr/src/base/yggdrasil
 
 COPY ./yggdrasil .
 
-RUN cargo build --release
+RUN cargo build
 
 WORKDIR /usr/src/base/harness
 
 COPY ./harness .
 
-RUN cargo build --release
+RUN cargo build
 
-WORKDIR /usr/src/base/harness/target/release
+WORKDIR /usr/src/base/harness/target/debug
 
 CMD ["./harness"]

@@ -49,8 +49,8 @@ foreach ($tests as $test) {
 
     $result = $unleash->isEnabled($test["toggleName"], $context);
     $output[$test["description"]] = [
-        "toggle_name" => $test["toggleName"],
         "result" => $result,
+        "toggleName" => $test["toggleName"],
     ];
 }
 echo json_encode($output, JSON_PRETTY_PRINT);

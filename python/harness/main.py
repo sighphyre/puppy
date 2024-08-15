@@ -40,16 +40,10 @@ for test in tests:
     expected_result = test["expectedResult"]
 
     result = unleash_client.is_enabled(toggle_name, context)
-    bench = test.get("bench", 1)
-
-    last_result = False
-
-    for i in range(bench):
-        last_result = unleash_client.is_enabled(toggle_name, context)
 
     output[description] = {
+        "result": result,
         "toggleName": toggle_name,
-        "lastResult": result,
     }
 
 

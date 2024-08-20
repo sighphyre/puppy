@@ -8,4 +8,4 @@ COPY ./templates ./templates
 
 RUN pip install pandas jinja2
 
-CMD ["python", "report.py", "--dataset", "testruns/fe86d6"]
+CMD ["python", "report.py"]

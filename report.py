@@ -5,16 +5,6 @@ import json
 import pandas as pd
 from jinja2 import Environment, FileSystemLoader
 
-parser = argparse.ArgumentParser(description="Generate an HTML report from a dataset.")
-parser.add_argument(
-    "--dataset",
-    type=str,
-    required=True,
-    help="Path to the dataset file, e.g. ./testruns/e47671",
-)
-
-args = parser.parse_args()
-
 
 @dataclass
 class TestEntry:
@@ -40,18 +30,21 @@ def build_html_report(report_matrix):
 
     def mark_color(value):
         if value:
-            return 'background-color: green'
+            return "background-color: green"
         else:
-            return 'background-color: blue'
+            return "background-color: blue"
 
     def highlight_unequal(row):
         if row.nunique() > 1:
             return [mark_color(value) for value in row]
         else:
-            return [''] * len(row)
+            return [""] * len(row)
 
-
-    df = pd.DataFrame(report_matrix.matrix, columns=report_matrix.columns_headers, index=report_matrix.row_headers)
+    df = pd.DataFrame(
+        report_matrix.matrix,
+        columns=report_matrix.columns_headers,
+        index=report_matrix.row_headers,
+    )
     styled_df = df.style.apply(highlight_unequal, axis=1)
 
     html_table = styled_df.to_html()
@@ -65,7 +58,9 @@ def build_html_report(report_matrix):
         f.write(html_content)
 
 
-def make_report_matrix(known_tests: set[str], test_data: list[TestDataSet]) -> ReportMatrix:
+def make_report_matrix(
+    known_tests: set[str], test_data: list[TestDataSet]
+) -> ReportMatrix:
     matrix = []
     ordered_tests = sorted(list(known_tests))
 
@@ -77,7 +72,9 @@ def make_report_matrix(known_tests: set[str], test_data: list[TestDataSet]) -> R
         matrix.append(row)
 
     column_headers = [test_set.name for test_set in test_data]
-    return ReportMatrix(columns_headers=column_headers, row_headers=ordered_tests, matrix=matrix)
+    return ReportMatrix(
+        columns_headers=column_headers, row_headers=ordered_tests, matrix=matrix
+    )
 
 
 def read_dataset(file_name, directory) -> TestDataSet:
@@ -93,9 +90,37 @@ def read_dataset(file_name, directory) -> TestDataSet:
     return TestDataSet(file_name, test_entries)
 
 
+def get_last_touched_report(path):
+    directories = [f.path for f in os.scandir(path) if f.is_dir()]
+    if not directories:
+        raise FileNotFoundError("No directories found in the specified path.")
+    last_modified_dir = max(directories, key=os.path.getmtime)
+    return last_modified_dir
+
+
 if __name__ == "__main__":
 
-    test_run_directories = [f.path for f in os.scandir(args.dataset) if f.is_dir()]
+    parser = argparse.ArgumentParser(
+        description="Generate an HTML report from a dataset."
+    )
+    parser.add_argument(
+        "--dataset",
+        type=str,
+        help="Path to the dataset file, e.g. ./testruns/e47671",
+    )
+
+    args = parser.parse_args()
+
+    if args.dataset:
+        dataset_path = args.dataset
+    else:
+        default_path = "./testruns"
+        dataset_path = get_last_touched_report(default_path)
+        print(
+            f"No dataset provided. Defaulting to the last modified directory: {dataset_path}"
+        )
+
+    test_run_directories = [f.path for f in os.scandir(dataset_path) if f.is_dir()]
 
     for directory in test_run_directories:
         known_tests = set()

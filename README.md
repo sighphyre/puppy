@@ -28,19 +28,60 @@ In practice these things are rarely needed but when you do need them it's great 
 
 ### Quickstart
 
-Start the puppy server:
+This guide assumes you have at bare minimum:
+
+- bash
+- jq
+- cat
+- cURL
+- awk
+- docker
+- firefox (optional, can use a different browser)
+
+This will take you through the process of getting the Python SDK up and running for report generation. This is the same process for all SDKs so feel free to generalize it.
+
+Start by cloning the SDK repo within the python folder:
+
+`cd python && git clone https://github.com/Unleash/unleash-client-python`
+
+Start the puppy server, this will serve toggles up to the SDK harness as it executes the test suite:
 
 `./run-puppy-server.sh`
 
-Hydrate the server with some feature toggles:
+Hydrate the server with some feature toggles, you should change these for your own run:
 
 `./hydrate.sh feature_toggles.json`
 
 The `feature_toggles.json` file can be swapped out for any valid response from `/api/client/features` from an Unleash or Edge server.
 
-Run a container. For example Python:
+Run a container in debug mode, this will stream out the results to std out. For example Python:
 
 `./run-test.sh python ./testfile.json`
+
+### Quickstart for reporting
+
+This assumes you've cloned the child repositories for all the SDKs. We'll now do a full test run against all the SDKs and generate some nice HTML reports so we can visualize the data sets.
+
+Turn off the debug flag in your shell so we can output the test files:
+
+`PUPPY_DEBUG=false`
+
+Run all the SDK harnesses for your test file:
+
+```sh
+./run-test.sh dotnet ./testfile.json && \
+./run-test.sh go ./testfile.json && \
+./run-test.sh java ./testfile.json && \
+./run-test.sh node ./testfile.json && \
+./run-test.sh php ./testfile.json && \
+./run-test.sh python ./testfile.json && \
+./run-test.sh ruby ./testfile.json && \
+./run-test.sh ygg ./testfile.json
+```
+
+Now you can run a report comparing the output of these runs against one another:
+
+`./run-report.sh && firefox report.html`
 
 ### What's Puppy
 

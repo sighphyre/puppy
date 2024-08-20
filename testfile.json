@@ -1,62 +1,444 @@
 {
-    "tests": [
-      {
-        "description": "F9.globalSegmentOn should be enabled",
-        "context": {
-          "properties": {
-            "version": "1.2.2"
-          }
-        },
-        "toggleName": "F9.globalSegmentOn",
-        "expectedResult": true,
-        "bench": 1
+  "tests": [
+    {
+      "description": "Sad Path - IN without inversion",
+      "context": {},
+      "toggleName": "IN",
+      "expectedResult": true
+    },
+    {
+      "description": "Sad Path - NOT_IN without inversion",
+      "context": {},
+      "toggleName": "NOT_IN",
+      "expectedResult": false
+    },
+    {
+      "description": "Sad Path - STR_CONTAINS IN without inversion",
+      "context": {},
+      "toggleName": "STR_CONTAINS",
+      "expectedResult": false
+    },
+    {
+      "description": "Sad Path - STR_ENDS_WITH without inversion",
+      "context": {},
+      "toggleName": "STR_ENDS_WITH",
+      "expectedResult": false
+    },
+    {
+      "description": "Sad Path - NUM_EQ without inversion",
+      "context": {},
+      "toggleName": "NUM_EQ",
+      "expectedResult": false
+    },
+    {
+      "description": "Sad Path - NUM_GT without inversion",
+      "context": {},
+      "toggleName": "NUM_GT",
+      "expectedResult": false
+    },
+    {
+      "description": "Sad Path - NUM_GTE without inversion",
+      "context": {},
+      "toggleName": "NUM_GTE",
+      "expectedResult": false
+    },
+    {
+      "description": "Sad Path - NUM_LT without inversion",
+      "context": {},
+      "toggleName": "NUM_LT",
+      "expectedResult": false
+    },
+    {
+      "description": "Sad Path - NUM_LTE without inversion",
+      "context": {},
+      "toggleName": "NUM_LTE",
+      "expectedResult": false
+    },
+    {
+      "description": "Sad Path - DATE_AFTER without inversion",
+      "context": {},
+      "toggleName": "DATE_AFTER",
+      "expectedResult": false
+    },
+    {
+      "description": "Sad Path - DATE_BEFORE without inversion",
+      "context": {},
+      "toggleName": "DATE_BEFORE",
+      "expectedResult": false
+    },
+    {
+      "description": "Sad Path - SEMVER_EQ without inversion",
+      "context": {},
+      "toggleName": "SEMVER_EQ",
+      "expectedResult": false
+    },
+    {
+      "description": "Sad Path - SEMVER_GT without inversion",
+      "context": {},
+      "toggleName": "SEMVER_GT",
+      "expectedResult": false
+    },
+    {
+      "description": "Sad Path - SEMVER_LT without inversion",
+      "context": {},
+      "toggleName": "SEMVER_LT",
+      "expectedResult": false
+    },
+    {
+      "description": "Sad Path - IN with inversion",
+      "context": {},
+      "toggleName": "INVERTED_IN",
+      "expectedResult": true
+    },
+    {
+      "description": "Sad Path - NOT_IN with inversion",
+      "context": {},
+      "toggleName": "INVERTED_NOT_IN",
+      "expectedResult": false
+    },
+    {
+      "description": "Sad Path - STR_CONTAINS IN with inversion",
+      "context": {},
+      "toggleName": "INVERTED_STR_CONTAINS",
+      "expectedResult": false
+    },
+    {
+      "description": "Sad Path - STR_ENDS_WITH with inversion",
+      "context": {},
+      "toggleName": "INVERTED_STR_ENDS_WITH",
+      "expectedResult": false
+    },
+    {
+      "description": "Sad Path - NUM_EQ with inversion",
+      "context": {},
+      "toggleName": "INVERTED_NUM_EQ",
+      "expectedResult": false
+    },
+    {
+      "description": "Sad Path - NUM_GT with inversion",
+      "context": {},
+      "toggleName": "INVERTED_NUM_GT",
+      "expectedResult": false
+    },
+    {
+      "description": "Sad Path - NUM_GTE with inversion",
+      "context": {},
+      "toggleName": "INVERTED_NUM_GTE",
+      "expectedResult": false
+    },
+    {
+      "description": "Sad Path - NUM_LT with inversion",
+      "context": {},
+      "toggleName": "INVERTED_NUM_LT",
+      "expectedResult": false
+    },
+    {
+      "description": "Sad Path - NUM_LTE with inversion",
+      "context": {},
+      "toggleName": "INVERTED_NUM_LTE",
+      "expectedResult": false
+    },
+    {
+      "description": "Sad Path - DATE_AFTER with inversion",
+      "context": {},
+      "toggleName": "INVERTED_DATE_AFTER",
+      "expectedResult": false
+    },
+    {
+      "description": "Sad Path - DATE_BEFORE with inversion",
+      "context": {},
+      "toggleName": "INVERTED_DATE_BEFORE",
+      "expectedResult": false
+    },
+    {
+      "description": "Sad Path - SEMVER_EQ with inversion",
+      "context": {},
+      "toggleName": "INVERTED_SEMVER_EQ",
+      "expectedResult": false
+    },
+    {
+      "description": "Sad Path - SEMVER_GT with inversion",
+      "context": {},
+      "toggleName": "INVERTED_SEMVER_GT",
+      "expectedResult": false
+    },
+    {
+      "description": "Sad Path - SEMVER_LT with inversion",
+      "context": {},
+      "toggleName": "INVERTED_SEMVER_LT",
+      "expectedResult": false
+    },
+    {
+      "description": "Happy Path - IN without inversion and matching context",
+      "context": {
+        "properties": {
+          "someValue": "s1"
+        }
       },
-      {
-        "description": "F9.globalSegmentOff should be disabled",
-        "context": {
-          "properties": {
-            "version": "3.2.2"
-          }
-        },
-        "toggleName": "F9.globalSegmentOff",
-        "expectedResult": true,
-        "bench": 1
+      "toggleName": "IN",
+      "expectedResult": true
+    },
+    {
+      "description": "Happy Path - NOT_IN without inversion and matching context",
+      "context": {
+        "properties": {
+          "someValue": "s1"
+        }
       },
-      {
-        "description": "F9.globalSegmentAndConstraint should be enabled",
-        "context": {
-          "properties": {
-            "version": "1.2.2"
-          }
-        },
-        "toggleName": "F9.globalSegmentAndConstraint",
-        "expectedResult": true,
-        "bench": 1
+      "toggleName": "NOT_IN",
+      "expectedResult": false
+    },
+    {
+      "description": "Happy Path - STR_CONTAINS IN without inversion and matching context",
+      "context": {
+        "properties": {
+          "someValue": "test"
+        }
       },
-      {
-        "description": "F9.withMissingSegment should force evaluation to false",
-        "context": {
-          "properties": {
-            "version": "1.2.2"
-          }
-        },
-        "toggleName": "F9.withMissingSegment",
-        "expectedResult": true,
-        "bench": 1
+      "toggleName": "STR_CONTAINS",
+      "expectedResult": false
+    },
+    {
+      "description": "Happy Path - STR_ENDS_WITH without inversion and matching context",
+      "context": {
+        "properties": {
+          "someValue": "test"
+        }
       },
-      {
-        "description": "F9.withSeveralConstraintsAndSegments should be enabled",
-        "context": {
-          "properties": {
-            "version": "1.2.2",
-            "customNumber": "3.14",
-            "customName": "Pie",
-            "slicesLeft": "7"
-          }
-        },
-        "toggleName": "F9.withSeveralConstraintsAndSegments",
-        "expectedResult": true,
-        "bench": 1
-      }
-    ]
-  }
+      "toggleName": "STR_ENDS_WITH",
+      "expectedResult": false
+    },
+    {
+      "description": "Happy Path - NUM_EQ without inversion and matching context",
+      "context": {
+        "properties": {
+          "someValue": "7"
+        }
+      },
+      "toggleName": "NUM_EQ",
+      "expectedResult": false
+    },
+    {
+      "description": "Happy Path - NUM_GT without inversion and matching context",
+      "context": {
+        "properties": {
+          "someValue": "7"
+        }
+      },
+      "toggleName": "NUM_GT",
+      "expectedResult": false
+    },
+    {
+      "description": "Happy Path - NUM_GTE without inversion and matching context",
+      "context": {
+        "properties": {
+          "someValue": "7"
+        }
+      },
+      "toggleName": "NUM_GTE",
+      "expectedResult": false
+    },
+    {
+      "description": "Happy Path - NUM_LT without inversion and matching context",
+      "context": {
+        "properties": {
+          "someValue": "7"
+        }
+      },
+      "toggleName": "NUM_LT",
+      "expectedResult": false
+    },
+    {
+      "description": "Happy Path - NUM_LTE without inversion and matching context",
+      "context": {
+        "properties": {
+          "someValue": "7"
+        }
+      },
+      "toggleName": "NUM_LTE",
+      "expectedResult": false
+    },
+    {
+      "description": "Happy Path - DATE_AFTER without inversion and matching context",
+      "context": {
+        "currentTime": "2022-01-22T11:30:00.000Z"
+      },
+      "toggleName": "DATE_AFTER",
+      "expectedResult": false
+    },
+    {
+      "description": "Happy Path - DATE_BEFORE without inversion and matching context",
+      "context": {
+        "currentTime": "2022-01-22T11:30:00.000Z"
+      },
+      "toggleName": "DATE_BEFORE",
+      "expectedResult": false
+    },
+    {
+      "description": "Happy Path - SEMVER_EQ without inversion and matching context",
+      "context": {
+        "properties": {
+          "someValue": "6.6.6"
+        }
+      },
+      "toggleName": "SEMVER_EQ",
+      "expectedResult": false
+    },
+    {
+      "description": "Happy Path - SEMVER_GT without inversion and matching context",
+      "context": {
+        "properties": {
+          "someValue": "6.6.6"
+        }
+      },
+      "toggleName": "SEMVER_GT",
+      "expectedResult": false
+    },
+    {
+      "description": "Happy Path - SEMVER_LT without inversion and matching context",
+      "context": {
+        "properties": {
+          "someValue": "6.6.6"
+        }
+      },
+      "toggleName": "SEMVER_LT",
+      "expectedResult": false
+    },
+    {
+      "description": "Happy Path - IN with inversion and matching context",
+      "context": {
+        "properties": {
+          "someValue": "s1"
+        }
+      },
+      "toggleName": "INVERTED_IN",
+      "expectedResult": true
+    },
+    {
+      "description": "Happy Path - NOT_IN with inversion and matching context",
+      "context": {
+        "properties": {
+          "someValue": "s1"
+        }
+      },
+      "toggleName": "INVERTED_NOT_IN",
+      "expectedResult": false
+    },
+    {
+      "description": "Happy Path - STR_CONTAINS IN with inversion and matching context",
+      "context": {
+        "properties": {
+          "someValue": "test"
+        }
+      },
+      "toggleName": "INVERTED_STR_CONTAINS",
+      "expectedResult": false
+    },
+    {
+      "description": "Happy Path - STR_ENDS_WITH with inversion and matching context",
+      "context": {
+        "properties": {
+          "someValue": "test"
+        }
+      },
+      "toggleName": "INVERTED_STR_ENDS_WITH",
+      "expectedResult": false
+    },
+    {
+      "description": "Happy Path - NUM_EQ with inversion and matching context",
+      "context": {
+        "properties": {
+          "someValue": "7"
+        }
+      },
+      "toggleName": "INVERTED_NUM_EQ",
+      "expectedResult": false
+    },
+    {
+      "description": "Happy Path - NUM_GT with inversion and matching context",
+      "context": {
+        "properties": {
+          "someValue": "7"
+        }
+      },
+      "toggleName": "INVERTED_NUM_GT",
+      "expectedResult": false
+    },
+    {
+      "description": "Happy Path - NUM_GTE with inversion and matching context",
+      "context": {
+        "properties": {
+          "someValue": "7"
+        }
+      },
+      "toggleName": "INVERTED_NUM_GTE",
+      "expectedResult": false
+    },
+    {
+      "description": "Happy Path - NUM_LT with inversion and matching context",
+      "context": {
+        "properties": {
+          "someValue": "7"
+        }
+      },
+      "toggleName": "INVERTED_NUM_LT",
+      "expectedResult": false
+    },
+    {
+      "description": "Happy Path - NUM_LTE with inversion and matching context",
+      "context": {
+        "properties": {
+          "someValue": "7"
+        }
+      },
+      "toggleName": "INVERTED_NUM_LTE",
+      "expectedResult": false
+    },
+    {
+      "description": "Happy Path - DATE_AFTER with inversion and matching context",
+      "context": {
+        "currentTime": "2022-01-22T11:30:00.000Z"
+      },
+      "toggleName": "INVERTED_DATE_AFTER",
+      "expectedResult": false
+    },
+    {
+      "description": "Happy Path - DATE_BEFORE with inversion and matching context",
+      "context": {
+        "currentTime": "2022-01-22T11:30:00.000Z"
+      },
+      "toggleName": "INVERTED_DATE_BEFORE",
+      "expectedResult": false
+    },
+    {
+      "description": "Happy Path - SEMVER_EQ with inversion and matching context",
+      "context": {
+        "properties": {
+          "someValue": "6.6.6"
+        }
+      },
+      "toggleName": "INVERTED_SEMVER_EQ",
+      "expectedResult": false
+    },
+    {
+      "description": "Happy Path - SEMVER_GT with inversion and matching context",
+      "context": {
+        "properties": {
+          "someValue": "6.6.6"
+        }
+      },
+      "toggleName": "INVERTED_SEMVER_GT",
+      "expectedResult": false
+    },
+    {
+      "description": "Happy Path - SEMVER_LT with inversion and matching context",
+      "context": {
+        "properties": {
+          "someValue": "6.6.6"
+        }
+      },
+      "toggleName": "INVERTED_SEMVER_LT",
+      "expectedResult": false
+    }
+  ]
+}

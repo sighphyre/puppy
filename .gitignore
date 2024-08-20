@@ -3,6 +3,7 @@ yggdrasil
 testruns/*
 split-spec
 .vscode
+venv
 
 
 **/target

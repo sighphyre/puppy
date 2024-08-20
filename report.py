@@ -46,23 +46,13 @@ def build_html_report(report_matrix):
 
     def highlight_unequal(row):
         if row.nunique() > 1:
-            # print(row[0], row[1])
             return [mark_color(value) for value in row]
-            # return ['background-color: yellow'] * len(row)
         else:
             return [''] * len(row)
 
-    def highlight_true_false(val):
-        if val is True:
-            return 'background-color: blue'
-        elif val is False:
-            return 'background-color: green'
-        else:
-            return ''
 
     df = pd.DataFrame(report_matrix.matrix, columns=report_matrix.columns_headers, index=report_matrix.row_headers)
     styled_df = df.style.apply(highlight_unequal, axis=1)
-    # styled_df = df.style.applymap(highlight_true_false)
 
     html_table = styled_df.to_html()
 

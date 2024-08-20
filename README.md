@@ -64,7 +64,7 @@ This assumes you've cloned the child repositories for all the SDKs. We'll now do
 
 Turn off the debug flag in your shell so we can output the test files:
 
-`PUPPY_DEBUG=false`
+`export PUPPY_DEBUG=false`
 
 Run all the SDK harnesses for your test file:
 

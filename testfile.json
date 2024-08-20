@@ -169,7 +169,7 @@
       "expectedResult": false
     },
     {
-      "description": "Happy Path - IN without inversion and matching context",
+      "description": "Happy Path - IN without inversion",
       "context": {
         "properties": {
           "someValue": "s1"
@@ -179,7 +179,7 @@
       "expectedResult": true
     },
     {
-      "description": "Happy Path - NOT_IN without inversion and matching context",
+      "description": "Happy Path - NOT_IN without inversion",
       "context": {
         "properties": {
           "someValue": "s1"
@@ -189,7 +189,7 @@
       "expectedResult": false
     },
     {
-      "description": "Happy Path - STR_CONTAINS IN without inversion and matching context",
+      "description": "Happy Path - STR_CONTAINS IN without inversion",
       "context": {
         "properties": {
           "someValue": "test"
@@ -199,7 +199,7 @@
       "expectedResult": false
     },
     {
-      "description": "Happy Path - STR_ENDS_WITH without inversion and matching context",
+      "description": "Happy Path - STR_ENDS_WITH without inversion",
       "context": {
         "properties": {
           "someValue": "test"
@@ -209,7 +209,7 @@
       "expectedResult": false
     },
     {
-      "description": "Happy Path - NUM_EQ without inversion and matching context",
+      "description": "Happy Path - NUM_EQ without inversion",
       "context": {
         "properties": {
           "someValue": "7"
@@ -219,7 +219,7 @@
       "expectedResult": false
     },
     {
-      "description": "Happy Path - NUM_GT without inversion and matching context",
+      "description": "Happy Path - NUM_GT without inversion",
       "context": {
         "properties": {
           "someValue": "7"
@@ -229,7 +229,7 @@
       "expectedResult": false
     },
     {
-      "description": "Happy Path - NUM_GTE without inversion and matching context",
+      "description": "Happy Path - NUM_GTE without inversion",
       "context": {
         "properties": {
           "someValue": "7"
@@ -239,7 +239,7 @@
       "expectedResult": false
     },
     {
-      "description": "Happy Path - NUM_LT without inversion and matching context",
+      "description": "Happy Path - NUM_LT without inversion",
       "context": {
         "properties": {
           "someValue": "7"
@@ -249,7 +249,7 @@
       "expectedResult": false
     },
     {
-      "description": "Happy Path - NUM_LTE without inversion and matching context",
+      "description": "Happy Path - NUM_LTE without inversion",
       "context": {
         "properties": {
           "someValue": "7"
@@ -259,7 +259,7 @@
       "expectedResult": false
     },
     {
-      "description": "Happy Path - DATE_AFTER without inversion and matching context",
+      "description": "Happy Path - DATE_AFTER without inversion",
       "context": {
         "currentTime": "2022-01-22T11:30:00.000Z"
       },
@@ -267,7 +267,7 @@
       "expectedResult": false
     },
     {
-      "description": "Happy Path - DATE_BEFORE without inversion and matching context",
+      "description": "Happy Path - DATE_BEFORE without inversion",
       "context": {
         "currentTime": "2022-01-22T11:30:00.000Z"
       },
@@ -275,7 +275,7 @@
       "expectedResult": false
     },
     {
-      "description": "Happy Path - SEMVER_EQ without inversion and matching context",
+      "description": "Happy Path - SEMVER_EQ without inversion",
       "context": {
         "properties": {
           "someValue": "6.6.6"
@@ -285,7 +285,7 @@
       "expectedResult": false
     },
     {
-      "description": "Happy Path - SEMVER_GT without inversion and matching context",
+      "description": "Happy Path - SEMVER_GT without inversion",
       "context": {
         "properties": {
           "someValue": "6.6.6"
@@ -295,7 +295,7 @@
       "expectedResult": false
     },
     {
-      "description": "Happy Path - SEMVER_LT without inversion and matching context",
+      "description": "Happy Path - SEMVER_LT without inversion",
       "context": {
         "properties": {
           "someValue": "6.6.6"
@@ -305,7 +305,7 @@
       "expectedResult": false
     },
     {
-      "description": "Happy Path - IN with inversion and matching context",
+      "description": "Happy Path - IN with inversion",
       "context": {
         "properties": {
           "someValue": "s1"
@@ -315,7 +315,7 @@
       "expectedResult": true
     },
     {
-      "description": "Happy Path - NOT_IN with inversion and matching context",
+      "description": "Happy Path - NOT_IN with inversion",
       "context": {
         "properties": {
           "someValue": "s1"
@@ -325,7 +325,7 @@
       "expectedResult": false
     },
     {
-      "description": "Happy Path - STR_CONTAINS IN with inversion and matching context",
+      "description": "Happy Path - STR_CONTAINS IN with inversion",
       "context": {
         "properties": {
           "someValue": "test"
@@ -335,7 +335,7 @@
       "expectedResult": false
     },
     {
-      "description": "Happy Path - STR_ENDS_WITH with inversion and matching context",
+      "description": "Happy Path - STR_ENDS_WITH with inversion",
       "context": {
         "properties": {
           "someValue": "test"
@@ -345,7 +345,7 @@
       "expectedResult": false
     },
     {
-      "description": "Happy Path - NUM_EQ with inversion and matching context",
+      "description": "Happy Path - NUM_EQ with inversion",
       "context": {
         "properties": {
           "someValue": "7"
@@ -355,7 +355,7 @@
       "expectedResult": false
     },
     {
-      "description": "Happy Path - NUM_GT with inversion and matching context",
+      "description": "Happy Path - NUM_GT with inversion",
       "context": {
         "properties": {
           "someValue": "7"
@@ -365,7 +365,7 @@
       "expectedResult": false
     },
     {
-      "description": "Happy Path - NUM_GTE with inversion and matching context",
+      "description": "Happy Path - NUM_GTE with inversion",
       "context": {
         "properties": {
           "someValue": "7"
@@ -375,7 +375,7 @@
       "expectedResult": false
     },
     {
-      "description": "Happy Path - NUM_LT with inversion and matching context",
+      "description": "Happy Path - NUM_LT with inversion",
       "context": {
         "properties": {
           "someValue": "7"
@@ -385,7 +385,7 @@
       "expectedResult": false
     },
     {
-      "description": "Happy Path - NUM_LTE with inversion and matching context",
+      "description": "Happy Path - NUM_LTE with inversion",
       "context": {
         "properties": {
           "someValue": "7"
@@ -395,7 +395,7 @@
       "expectedResult": false
     },
     {
-      "description": "Happy Path - DATE_AFTER with inversion and matching context",
+      "description": "Happy Path - DATE_AFTER with inversion",
       "context": {
         "currentTime": "2022-01-22T11:30:00.000Z"
       },
@@ -403,7 +403,7 @@
       "expectedResult": false
     },
     {
-      "description": "Happy Path - DATE_BEFORE with inversion and matching context",
+      "description": "Happy Path - DATE_BEFORE with inversion",
       "context": {
         "currentTime": "2022-01-22T11:30:00.000Z"
       },
@@ -411,7 +411,7 @@
       "expectedResult": false
     },
     {
-      "description": "Happy Path - SEMVER_EQ with inversion and matching context",
+      "description": "Happy Path - SEMVER_EQ with inversion",
       "context": {
         "properties": {
           "someValue": "6.6.6"
@@ -421,7 +421,7 @@
       "expectedResult": false
     },
     {
-      "description": "Happy Path - SEMVER_GT with inversion and matching context",
+      "description": "Happy Path - SEMVER_GT with inversion",
       "context": {
         "properties": {
           "someValue": "6.6.6"
@@ -431,7 +431,7 @@
       "expectedResult": false
     },
     {
-      "description": "Happy Path - SEMVER_LT with inversion and matching context",
+      "description": "Happy Path - SEMVER_LT with inversion",
       "context": {
         "properties": {
           "someValue": "6.6.6"

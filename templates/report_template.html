@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Data Report</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        table, th, td { border: 1px solid black; }
+        th, td { padding: 10px; text-align: center; }
+    </style>
+</head>
+<body>
+    <h2>SDK Evaluation Report</h2>
+    {{ data_table|safe }}
+</body>
+</html>

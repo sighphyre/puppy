@@ -1,0 +1,11 @@
+FROM python:3.9
+
+WORKDIR /app
+
+COPY ./report.py ./report.py
+
+COPY ./templates ./templates
+
+RUN pip install pandas jinja2
+
+CMD ["python", "report.py", "--dataset", "testruns/fe86d6"]

@@ -15,7 +15,7 @@ def generate_default():
 
 
 def generate_user_with_id():
-    user_ids = [str(x) for x in range(1, randint(2, 100))]
+    user_ids = ", ".join([str(x) for x in range(1, randint(2, 100))])
     return {
         "name": "userWithId",
         "parameters": {

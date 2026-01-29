@@ -5,10 +5,11 @@ import logging
 
 
 def make_edge_token(token: str):
+    environment = token.split(".")[0].split(":")[1]
     return {
         "token": token,
         "type": "CLIENT",
-        "environment": "development",
+        "environment": environment,
         "projects": ["*"],
     }
 
@@ -56,6 +57,7 @@ def update_state():
 @app.route("/api/client/edge-licensing/heartbeat", methods=["POST"])
 def license_heartbeat():
     return jsonify({"edgeLicenseState": "Valid"}), 200
+
 
 @app.route("/edge/validate", methods=["POST"])
 def validate():

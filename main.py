@@ -53,6 +53,10 @@ def update_state():
         return jsonify({"error": "Invalid JSON"}), 400
 
 
+@app.route("/api/client/edge-licensing/heartbeat", methods=["POST"])
+def license_heartbeat():
+    return jsonify({"edgeLicenseState": "Valid"}), 200
+
 @app.route("/edge/validate", methods=["POST"])
 def validate():
     body = request.get_json()

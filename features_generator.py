@@ -64,9 +64,10 @@ def generate_remote_address():
     }
 
 
-def generate_flexible_rollout():
+def generate_flexible_rollout(segments=None):
     return {
         "name": "flexibleRollout",
+        "segments": segments if segments is not None else [],
         "parameters": {
             "rollout": str(randint(0, 100)),
             "stickiness": "default",  ## do we care here? Probably not right now
@@ -85,6 +86,11 @@ VALID_STRATEGIES = {
     "flexibleRollout": generate_flexible_rollout,
 }
 
+def gen_random_segment(id, constraints=None):
+    return {
+        "id": id,
+        "constraints": constraints if constraints is not None else [],
+    }
 
 def gen_date():
     year = randint(2000, 2023)
@@ -148,16 +154,33 @@ def generate_random_feature(name_len=10):
     return {
         "name": feature_name,
         "enabled": True,
+        "project": "default",
         "description:": f"{feature_name} description",
         "strategies": [gen_random_strategy() for _ in range(randint(1, 3))],
     }
 
+def generate_fixed_feature_set(count):
+    feature_name = f"FixedFeatureSet{count}"
 
-def generate_feature_set(min=100, max=1000):
     return {
-        "features": [generate_random_feature() for _ in range(randint(min, max))],
+        "name": feature_name,
+        "enabled": True,
+        "project": "default",
+        "description:": f"{feature_name} description",
+        "strategies": [generate_flexible_rollout([x + y for y in range(0, 100)]) for x in range(0, 100)]
+    }
+
+
+def generate_feature_set(min=1, max=2):
+    return {
+        "features": [generate_fixed_feature_set(x) for x in range(0, 100)],
+        "segments": [gen_random_segment(x) for x in range(100000)],
         "version": 2,
     }
+    # return {
+    #     "features": [generate_random_feature() for _ in range(randint(min, max))],
+    #     "version": 2,
+    # }
 
 if __name__ == "__main__":
     feature_set = generate_feature_set()

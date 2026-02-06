@@ -10,6 +10,7 @@ Pivot Puppy from an evaluation tool into a test framework that verifies publicly
 - Support two modes:
   - Standalone mode with local hydration (existing `hydrate.sh` flow).
   - Proxy mode that sits in front of Unleash for hard validation; if Unleash rejects what we send, we fail.
+- Provide a long-lived report ingestion API for scaffolded test results.
 
 ## Non-Goals (for now)
 - Deep unit test coverage inside SDKs.

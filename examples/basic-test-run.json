@@ -31,6 +31,27 @@
           "context": {
             "userId": "123"
           }
+        },
+        {
+          "op": "getVariant",
+          "toggleName": "demoToggle",
+          "context": {
+            "userId": "123"
+          }
+        },
+        {
+          "op": "isEnabled",
+          "toggleName": "missingToggle",
+          "context": {
+            "userId": "123"
+          }
+        },
+        {
+          "op": "getVariant",
+          "toggleName": "missingToggle",
+          "context": {
+            "userId": "123"
+          }
         }
       ]
     }

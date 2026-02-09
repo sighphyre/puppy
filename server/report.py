@@ -34,11 +34,18 @@ def summarize_toggle_totals(seen_metrics):
                     raise ValueError("Toggle counts must be an object.")
                 yes_count = int(toggle_counts.get("yes", 0))
                 no_count = int(toggle_counts.get("no", 0))
+                variants = toggle_counts.get("variants", {})
+                if variants is not None and not isinstance(variants, dict):
+                    raise ValueError("Toggle variants must be an object.")
 
                 if toggle_name not in totals:
-                    totals[toggle_name] = {"yes": 0, "no": 0}
+                    totals[toggle_name] = {"yes": 0, "no": 0, "variants": {}}
                 totals[toggle_name]["yes"] += yes_count
                 totals[toggle_name]["no"] += no_count
+                for variant_name, variant_count in variants.items():
+                    if variant_name not in totals[toggle_name]["variants"]:
+                        totals[toggle_name]["variants"][variant_name] = 0
+                    totals[toggle_name]["variants"][variant_name] += int(variant_count)
 
     return totals
 

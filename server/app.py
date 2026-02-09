@@ -8,7 +8,7 @@ from .report import report_api
 from .tests import tests_api
 
 
-def create_app(test_run) -> Flask:
+def create_app(test_run, report_output_dir) -> Flask:
     app = Flask(__name__)
     app.logger.setLevel(logging.INFO)
 
@@ -19,6 +19,7 @@ def create_app(test_run) -> Flask:
     store.run_id = test_run["meta"]["runId"]
 
     app.config["PUPPY_STORE"] = store
+    app.config["REPORT_OUTPUT_DIR"] = report_output_dir
 
     app.register_blueprint(state_api)
     app.register_blueprint(unleash_client_api)

@@ -13,11 +13,16 @@ def parse_args():
     )
     parser.add_argument("--host", default="0.0.0.0")
     parser.add_argument("--port", default=4242, type=int)
+    parser.add_argument(
+        "--report-output-dir",
+        default="./testruns/reports",
+        help="Directory where ingested harness reports are persisted.",
+    )
     return parser.parse_args()
 
 
 if __name__ == "__main__":
     args = parse_args()
     test_run = load_test_run(args.test_run)
-    app = create_app(test_run=test_run)
+    app = create_app(test_run=test_run, report_output_dir=args.report_output_dir)
     app.run(host=args.host, port=args.port)

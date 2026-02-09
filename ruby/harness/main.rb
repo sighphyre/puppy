@@ -60,7 +60,6 @@ end
 
 wait_for_initial_fetch(INITIAL_FETCH_TIMEOUT_MS)
 
-output = {}
 results = []
 tests.each do |test|
   test_id = test["id"] || test["name"] || "unknown"
@@ -104,12 +103,6 @@ tests.each do |test|
         },
       }
     else
-      results << {
-        "testId" => test_id,
-        "stepIndex" => index,
-        "op" => op,
-        "toggleName" => toggle_name,
-      }
       raise "Unknown op: #{op}"
     end
   end

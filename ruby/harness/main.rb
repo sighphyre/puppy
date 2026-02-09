@@ -126,6 +126,6 @@ if report_url
   http.request(request)
 end
 
-puts JSON.pretty_generate(report_payload, indent: '    ')
+puts "Closed test run with runId=#{run_id}, sent #{results.size} results to #{report_url}"
 
 client.shutdown

@@ -8,6 +8,7 @@ venv
 
 **/target
 **/node_modules
+**/__pycache__
 **/Debug
 **/bin
 **/obj

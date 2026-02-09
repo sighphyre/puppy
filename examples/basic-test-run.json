@@ -1,0 +1,38 @@
+{
+  "meta": {
+    "runId": "basic-ruby-isenabled",
+    "name": "Basic IsEnabled Run"
+  },
+  "clientFeatures": {
+    "version": 2,
+    "features": [
+      {
+        "name": "demoToggle",
+        "enabled": true,
+        "project": "default",
+        "strategies": [
+          {
+            "name": "default",
+            "parameters": {}
+          }
+        ]
+      }
+    ],
+    "segments": []
+  },
+  "tests": [
+    {
+      "id": "t-isenabled-1",
+      "name": "isEnabled-basic",
+      "steps": [
+        {
+          "op": "isEnabled",
+          "toggleName": "demoToggle",
+          "context": {
+            "userId": "123"
+          }
+        }
+      ]
+    }
+  ]
+}

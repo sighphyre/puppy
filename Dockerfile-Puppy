@@ -3,9 +3,9 @@ FROM python:3.9
 WORKDIR /app
 
 COPY ./main.py ./main.py
-
-COPY ./feature_toggles.json ./feature_toggles.json
+COPY ./server ./server
+COPY ./examples ./examples
 
 RUN pip install --no-cache-dir flask
 
-CMD ["python", "main.py"]
+CMD ["python", "main.py", "--test-run", "/app/examples/basic-test-run.json"]

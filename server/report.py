@@ -15,6 +15,8 @@ def persist_reports(store, run_id, sdk, output_dir):
         "sdk": sdk,
         "date": date_tag,
         "reports": store.seen_reports.get(run_id, []),
+        "metrics": store.seen_metrics,
+        "registrations": store.seen_registrations,
     }
     with open(destination_path, "w", encoding="utf-8") as file_handle:
         json.dump(payload, file_handle, indent=2)

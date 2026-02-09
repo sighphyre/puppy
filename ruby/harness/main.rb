@@ -116,6 +116,9 @@ report_payload = {
   "results" => results
 }
 
+# Ensure metrics are flushed before final report ingestion.
+client.shutdown
+
 if report_url
   uri = URI.parse(report_url)
   http = Net::HTTP.new(uri.host, uri.port)
@@ -127,5 +130,3 @@ if report_url
 end
 
 puts "Closed test run with runId=#{run_id}, sent #{results.size} results to #{report_url}"
-
-client.shutdown

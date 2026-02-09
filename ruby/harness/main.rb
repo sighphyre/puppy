@@ -6,6 +6,8 @@ require 'logger'
 require 'net/http'
 require 'uri'
 
+INITIAL_FETCH_TIMEOUT_MS = 2000
+
 class NullLogger < Logger
   def initialize(*args)
   end
@@ -31,8 +33,6 @@ rescue StandardError => e
 end
 
 tests = input["tests"] || []
-control = input["control"] || {}
-timeout_ms = (control["timeoutMs"] || ENV.fetch('PUPPY_HARNESS_TIMEOUT_MS', '2000')).to_i
 
 @unleash = Unleash::Client.new(
   url: unleash_api_url,
@@ -58,7 +58,7 @@ def wait_for_initial_fetch(timeout_ms)
   end
 end
 
-wait_for_initial_fetch(timeout_ms)
+wait_for_initial_fetch(INITIAL_FETCH_TIMEOUT_MS)
 
 output = {}
 results = []

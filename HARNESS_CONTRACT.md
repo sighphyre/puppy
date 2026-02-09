@@ -13,7 +13,6 @@ Define a consistent, SDK-agnostic format for driving SDK behavior and capturing 
 - `UNLEASH_API_KEY` (default: `SOME-SECRET`)
 - `PUPPY_BASE_URL` (default: `http://localhost:4242`)
 - `PUPPY_RUN_ID` (default: `default`)
-- `PUPPY_HARNESS_TIMEOUT_MS` (default: `2000`)
 - `PUPPY_DEBUG` (`false` disables logs)
 
 ## Derived Endpoints
@@ -23,9 +22,6 @@ Define a consistent, SDK-agnostic format for driving SDK behavior and capturing 
 ## Input Shape
 ```json
 {
-  "control": {
-    "timeoutMs": 2000
-  },
   "tests": [
     {
       "id": "string",
@@ -91,11 +87,3 @@ Define a consistent, SDK-agnostic format for driving SDK behavior and capturing 
   ]
 }
 ```
-
-## Execution Semantics
-- Missing `toggleName` for `isEnabled` and `getVariant` is fatal.
-- Harness waits for initial SDK fetch before step execution using timeout:
-  - `control.timeoutMs` if present
-  - otherwise `PUPPY_HARNESS_TIMEOUT_MS`
-- Harness posts output payload to `${PUPPY_BASE_URL}/api/report/ingest` with header `X-Run-Id: ${PUPPY_RUN_ID}`.
-

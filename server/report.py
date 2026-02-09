@@ -6,6 +6,43 @@ import os
 report_api = Blueprint("report_api", __name__)
 
 
+def summarize_toggle_totals(seen_metrics):
+    totals = {}
+
+    for metric_batches in seen_metrics.values():
+        if not isinstance(metric_batches, list):
+            raise ValueError("Metrics batches must be a list.")
+
+        for metric_entry in metric_batches:
+            if not isinstance(metric_entry, dict):
+                raise ValueError("Each metric entry must be an object.")
+
+            bucket = metric_entry.get("bucket")
+            if bucket is None:
+                continue
+            if not isinstance(bucket, dict):
+                raise ValueError("Metric entry bucket must be an object.")
+
+            toggles = bucket.get("toggles")
+            if toggles is None:
+                continue
+            if not isinstance(toggles, dict):
+                raise ValueError("Metric bucket toggles must be an object.")
+
+            for toggle_name, toggle_counts in toggles.items():
+                if not isinstance(toggle_counts, dict):
+                    raise ValueError("Toggle counts must be an object.")
+                yes_count = int(toggle_counts.get("yes", 0))
+                no_count = int(toggle_counts.get("no", 0))
+
+                if toggle_name not in totals:
+                    totals[toggle_name] = {"yes": 0, "no": 0}
+                totals[toggle_name]["yes"] += yes_count
+                totals[toggle_name]["no"] += no_count
+
+    return totals
+
+
 def persist_reports(store, run_id, sdk, output_dir):
     os.makedirs(output_dir, exist_ok=True)
     date_tag = datetime.now(timezone.utc).strftime("%Y%m%d")
@@ -16,6 +53,7 @@ def persist_reports(store, run_id, sdk, output_dir):
         "date": date_tag,
         "reports": store.seen_reports.get(run_id, []),
         "metrics": store.seen_metrics,
+        "metricsToggleTotals": summarize_toggle_totals(store.seen_metrics),
         "registrations": store.seen_registrations,
     }
     with open(destination_path, "w", encoding="utf-8") as file_handle:

@@ -13,7 +13,10 @@ def create_app(test_run, report_output_dir) -> Flask:
     app.logger.setLevel(logging.INFO)
 
     store = InMemoryState()
-    store.features_data = test_run["clientFeatures"]
+    client_features = test_run["clientFeatures"]
+    store.features_sequence = client_features if isinstance(client_features, list) else [client_features]
+    store.features_data = store.features_sequence[0]
+    store.features_request_count = 0
     store.tests_data = test_run["tests"]
     store.expected_data = test_run["expected"]
     store.run_meta = test_run["meta"]

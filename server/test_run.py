@@ -19,9 +19,16 @@ def validate_test_run(data):
 
     client_features = data.get("clientFeatures")
     _require(
-        isinstance(client_features, dict),
-        "Test run requires a 'clientFeatures' object.",
+        isinstance(client_features, (dict, list)),
+        "Test run requires 'clientFeatures' as an object or a non-empty list of objects.",
     )
+    if isinstance(client_features, list):
+        _require(len(client_features) > 0, "clientFeatures list must not be empty.")
+        for feature_set in client_features:
+            _require(
+                isinstance(feature_set, dict),
+                "Each clientFeatures list item must be an object.",
+            )
 
     tests = data.get("tests")
     _require(isinstance(tests, list) and len(tests) > 0, "Test run requires non-empty 'tests'.")

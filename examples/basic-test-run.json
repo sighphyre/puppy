@@ -3,23 +3,42 @@
     "runId": "basic-ruby-isenabled",
     "name": "Basic IsEnabled Run"
   },
-  "clientFeatures": {
-    "version": 2,
-    "features": [
-      {
-        "name": "demoToggle",
-        "enabled": true,
-        "project": "default",
-        "strategies": [
-          {
-            "name": "default",
-            "parameters": {}
-          }
-        ]
-      }
-    ],
-    "segments": []
-  },
+  "clientFeatures": [
+    {
+      "version": 2,
+      "features": [
+        {
+          "name": "demoToggle",
+          "enabled": true,
+          "project": "default",
+          "strategies": [
+            {
+              "name": "default",
+              "parameters": {}
+            }
+          ]
+        }
+      ],
+      "segments": []
+    },
+    {
+      "version": 2,
+      "features": [
+        {
+          "name": "demoToggle",
+          "enabled": false,
+          "project": "default",
+          "strategies": [
+            {
+              "name": "default",
+              "parameters": {}
+            }
+          ]
+        }
+      ],
+      "segments": []
+    }
+  ],
   "tests": [
     {
       "id": "t-isenabled-1",

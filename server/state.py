@@ -5,6 +5,8 @@ import json
 class InMemoryState:
     def __init__(self):
         self.features_data = None
+        self.features_sequence = []
+        self.features_request_count = 0
         self.tests_data = None
         self.expected_data = None
         self.run_meta = None
@@ -33,7 +35,13 @@ state_api = Blueprint("state_api", __name__)
 def update_state():
     store = current_app.config["PUPPY_STORE"]
     try:
-        store.features_data = request.get_json()
+        payload = request.get_json()
+        if isinstance(payload, list):
+            store.features_sequence = payload
+        else:
+            store.features_sequence = [payload]
+        store.features_data = store.features_sequence[0] if store.features_sequence else None
+        store.features_request_count = 0
         return jsonify({"message": "State updated successfully"}), 200
     except json.JSONDecodeError:
         return jsonify({"error": "Invalid JSON"}), 400

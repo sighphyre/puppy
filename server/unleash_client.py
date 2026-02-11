@@ -15,23 +15,29 @@ def generate_etag(data):
 @unleash_client_api.route("/api/client/features")
 def features():
     store = current_app.config["PUPPY_STORE"]
-    if store.features_data is None:
+    if not store.features_sequence:
         return jsonify({"error": "No data available"}), 404
 
-    etag = generate_etag(store.features_data)
+    sequence_index = min(store.features_request_count, len(store.features_sequence) - 1)
+    features_data = store.features_sequence[sequence_index]
+    store.features_data = features_data
+
+    etag = generate_etag(features_data)
     if_none_match = request.headers.get("If-None-Match")
     authorization = request.headers.get("Authorization")
     if if_none_match == etag:
         response = make_response("", 304)
     else:
-        response = make_response(jsonify(store.features_data), 200)
+        response = make_response(jsonify(features_data), 200)
     response.headers["ETag"] = etag
+    store.features_request_count += 1
 
     store.add_features_poll_trace(
         {
             "timestamp": datetime.now(timezone.utc).isoformat(),
             "authorization": authorization,
             "ifNoneMatch": if_none_match,
+            "sequenceIndex": sequence_index,
             "responseStatus": response.status_code,
             "responseEtag": etag,
         }

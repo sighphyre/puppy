@@ -50,21 +50,45 @@ def summarize_toggle_totals(seen_metrics):
     return totals
 
 
+def build_assertions(expected_data, actual_toggle_totals):
+    expected_toggle_totals = expected_data.get("metricsToggleTotals", {})
+    if not expected_toggle_totals:
+        return {
+            "configured": False,
+            "pass": True,
+            "details": "No expected.metricsToggleTotals configured.",
+        }
+
+    assertion_pass = actual_toggle_totals == expected_toggle_totals
+    return {
+        "configured": True,
+        "pass": assertion_pass,
+        "expected": expected_toggle_totals,
+        "actual": actual_toggle_totals,
+    }
+
+
 def persist_reports(store, run_id, sdk, output_dir):
     os.makedirs(output_dir, exist_ok=True)
     date_tag = datetime.now(timezone.utc).strftime("%Y%m%d")
     destination_path = os.path.join(output_dir, f"{run_id}-{sdk}-{date_tag}.json")
+    actual_toggle_totals = summarize_toggle_totals(store.seen_metrics)
+    assertions = {
+        "metricsToggleTotals": build_assertions(store.expected_data or {}, actual_toggle_totals),
+    }
     payload = {
         "runId": run_id,
         "sdk": sdk,
         "date": date_tag,
         "reports": store.seen_reports.get(run_id, []),
         "metrics": store.seen_metrics,
-        "metricsToggleTotals": summarize_toggle_totals(store.seen_metrics),
+        "metricsToggleTotals": actual_toggle_totals,
         "registrations": store.seen_registrations,
+        "assertions": assertions,
     }
     with open(destination_path, "w", encoding="utf-8") as file_handle:
         json.dump(payload, file_handle, indent=2)
+    return assertions
 
 
 @report_api.route("/api/report/ingest", methods=["POST"])
@@ -79,10 +103,23 @@ def ingest_report():
         return jsonify({"error": "Missing meta.sdk in report payload"}), 400
     store.add_batch_to(store.seen_reports, body, run_id)
     try:
-        persist_reports(store, run_id, sdk.strip(), current_app.config["REPORT_OUTPUT_DIR"])
+        assertions = persist_reports(
+            store,
+            run_id,
+            sdk.strip(),
+            current_app.config["REPORT_OUTPUT_DIR"],
+        )
     except Exception as error:
         return jsonify({"error": f"Failed to persist report: {error}"}), 500
-    return jsonify({"message": "Report received successfully"}), 200
+    return (
+        jsonify(
+            {
+                "message": "Report received successfully",
+                "assertions": assertions,
+            }
+        ),
+        200,
+    )
 
 
 @report_api.route("/api/report/ingest/<run_id>")

@@ -15,6 +15,7 @@ def create_app(test_run, report_output_dir) -> Flask:
     store = InMemoryState()
     store.features_data = test_run["clientFeatures"]
     store.tests_data = test_run["tests"]
+    store.expected_data = test_run["expected"]
     store.run_meta = test_run["meta"]
     store.run_id = test_run["meta"]["runId"]
 

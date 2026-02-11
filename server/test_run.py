@@ -46,10 +46,50 @@ def validate_test_run(data):
                 f"Step op '{op}' requires a context object.",
             )
 
+    expected = data.get("expected", {})
+    _require(isinstance(expected, dict), "Test run 'expected' must be an object when provided.")
+    expected_toggle_totals = expected.get("metricsToggleTotals", {})
+    _require(
+        isinstance(expected_toggle_totals, dict),
+        "expected.metricsToggleTotals must be an object when provided.",
+    )
+    for toggle_name, toggle_counts in expected_toggle_totals.items():
+        _require(
+            isinstance(toggle_name, str) and toggle_name.strip(),
+            "expected.metricsToggleTotals keys must be non-empty strings.",
+        )
+        _require(
+            isinstance(toggle_counts, dict),
+            "Each expected.metricsToggleTotals entry must be an object.",
+        )
+        _require(
+            isinstance(toggle_counts.get("yes"), int),
+            "Each expected.metricsToggleTotals entry requires integer 'yes'.",
+        )
+        _require(
+            isinstance(toggle_counts.get("no"), int),
+            "Each expected.metricsToggleTotals entry requires integer 'no'.",
+        )
+        variants = toggle_counts.get("variants", {})
+        _require(
+            isinstance(variants, dict),
+            "Each expected.metricsToggleTotals variants value must be an object.",
+        )
+        for variant_name, variant_count in variants.items():
+            _require(
+                isinstance(variant_name, str) and variant_name.strip(),
+                "Variant names in expected.metricsToggleTotals must be non-empty strings.",
+            )
+            _require(
+                isinstance(variant_count, int),
+                "Variant counts in expected.metricsToggleTotals must be integers.",
+            )
+
     return {
         "meta": meta,
         "clientFeatures": client_features,
         "tests": tests,
+        "expected": expected,
     }
 
 

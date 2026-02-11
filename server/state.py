@@ -6,6 +6,7 @@ class InMemoryState:
     def __init__(self):
         self.features_data = None
         self.tests_data = None
+        self.expected_data = None
         self.run_meta = None
         self.run_id = None
         self.seen_metrics = {}

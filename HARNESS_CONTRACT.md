@@ -33,6 +33,10 @@ Define a consistent, SDK-agnostic format for driving SDK behavior and capturing 
           "context": { "userId": "1" },
           "defaultValue": false,
           "expectedResult": true
+        },
+        {
+          "op": "sleep",
+          "durationMs": 2500
         }
       ]
     }
@@ -67,6 +71,12 @@ Define a consistent, SDK-agnostic format for driving SDK behavior and capturing 
     - `name` (string)
     - `enabled` (boolean)
     - `payload` (object or null)
+
+### `sleep`
+- **Inputs**
+  - `durationMs` (required)
+- **Output**
+  - none
 
 ## Output Shape
 ```json

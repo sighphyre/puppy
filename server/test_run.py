@@ -1,7 +1,7 @@
 import json
 
 
-SUPPORTED_OPS = {"isEnabled", "getVariant"}
+SUPPORTED_OPS = {"isEnabled", "getVariant", "sleep"}
 
 
 def _require(condition, message):
@@ -37,14 +37,15 @@ def validate_test_run(data):
             _require(isinstance(step, dict), "Each step must be an object.")
             op = step.get("op")
             _require(op in SUPPORTED_OPS, f"Unsupported op '{op}'.")
-            _require(
-                isinstance(step.get("toggleName"), str) and step["toggleName"].strip(),
-                f"Step op '{op}' requires a non-empty toggleName.",
-            )
-            _require(
-                isinstance(step.get("context"), dict),
-                f"Step op '{op}' requires a context object.",
-            )
+            if op in {"isEnabled", "getVariant"}:
+                _require(
+                    isinstance(step.get("toggleName"), str) and step["toggleName"].strip(),
+                    f"Step op '{op}' requires a non-empty toggleName.",
+                )
+                _require(
+                    isinstance(step.get("context"), dict),
+                    f"Step op '{op}' requires a context object.",
+                )
             if "expectedResult" in step:
                 expected_result = step["expectedResult"]
                 if op == "isEnabled":

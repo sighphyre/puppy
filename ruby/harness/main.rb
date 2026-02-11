@@ -67,11 +67,11 @@ tests.each do |test|
 
   steps.each_with_index do |step, index|
     op = step["op"]
-    toggle_name = step["toggleName"]
-    context = Unleash::Context.new(step["context"])
 
     case op
     when "isEnabled"
+      toggle_name = step["toggleName"]
+      context = Unleash::Context.new(step["context"])
       raise "Missing toggleName for isEnabled step" if toggle_name.nil?
       default_value = step.key?("defaultValue") ? step["defaultValue"] : false
       result = client.is_enabled?(toggle_name, context, default_value)
@@ -83,6 +83,8 @@ tests.each do |test|
         "result" => result,
       }
     when "getVariant"
+      toggle_name = step["toggleName"]
+      context = Unleash::Context.new(step["context"])
       raise "Missing toggleName for getVariant step" if toggle_name.nil?
       default_variant_input = step["defaultVariant"]
       fallback_variant = if default_variant_input
@@ -102,6 +104,8 @@ tests.each do |test|
           "payload" => variant.payload,
         },
       }
+    when "sleep"
+      sleep(step["durationMs"] / 1000.0)
     else
       raise "Unknown op: #{op}"
     end

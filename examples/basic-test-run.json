@@ -64,6 +64,10 @@
             "enabled": false,
             "payload": null
           }
+        },
+        {
+          "op": "sleep",
+          "durationMs": 2500
         }
       ]
     }

@@ -50,6 +50,85 @@ def summarize_toggle_totals(seen_metrics):
     return totals
 
 
+def build_expected_results_map(tests_data):
+    expected = {}
+    for test in tests_data:
+        test_id = test.get("id") or test.get("name") or "unknown"
+        for index, step in enumerate(test.get("steps", [])):
+            if "expectedResult" in step:
+                expected[(test_id, index)] = {
+                    "op": step.get("op"),
+                    "toggleName": step.get("toggleName"),
+                    "expectedResult": step["expectedResult"],
+                }
+    return expected
+
+
+def build_actual_results_map(report_body):
+    results = report_body.get("results", []) if isinstance(report_body, dict) else []
+    actual = {}
+    for entry in results:
+        test_id = entry.get("testId")
+        step_index = entry.get("stepIndex")
+        if test_id is None or step_index is None:
+            raise ValueError("Each reported result must include testId and stepIndex.")
+        actual[(test_id, int(step_index))] = {
+            "op": entry.get("op"),
+            "toggleName": entry.get("toggleName"),
+            "result": entry.get("result"),
+        }
+    return actual
+
+
+def build_operation_results_assertion(tests_data, report_body):
+    expected_map = build_expected_results_map(tests_data)
+    if not expected_map:
+        return {
+            "configured": False,
+            "pass": True,
+            "details": "No step expectedResult values configured.",
+        }
+
+    actual_map = build_actual_results_map(report_body)
+    mismatches = []
+
+    for key, expected in expected_map.items():
+        actual = actual_map.get(key)
+        if actual is None:
+            raise ValueError(
+                f"Harness bug: missing actual result for testId={key[0]} stepIndex={key[1]}."
+            )
+        if actual.get("op") != expected["op"]:
+            raise ValueError(
+                "Harness bug: op mismatch "
+                f"for testId={key[0]} stepIndex={key[1]} "
+                f"expected={expected['op']} actual={actual.get('op')}."
+            )
+        if actual.get("toggleName") != expected["toggleName"]:
+            raise ValueError(
+                "Harness bug: toggleName mismatch "
+                f"for testId={key[0]} stepIndex={key[1]} "
+                f"expected={expected['toggleName']} actual={actual.get('toggleName')}."
+            )
+        if actual.get("result") != expected["expectedResult"]:
+            mismatches.append(
+                {
+                    "testId": key[0],
+                    "stepIndex": key[1],
+                    "reason": "result mismatch",
+                    "expected": expected["expectedResult"],
+                    "actual": actual.get("result"),
+                }
+            )
+
+    return {
+        "configured": True,
+        "pass": len(mismatches) == 0,
+        "mismatches": mismatches,
+        "expectedCount": len(expected_map),
+    }
+
+
 def build_assertions(expected_data, actual_toggle_totals):
     expected_toggle_totals = expected_data.get("metricsToggleTotals", {})
     if not expected_toggle_totals:
@@ -68,13 +147,14 @@ def build_assertions(expected_data, actual_toggle_totals):
     }
 
 
-def persist_reports(store, run_id, sdk, output_dir):
+def persist_reports(store, run_id, sdk, output_dir, report_body):
     os.makedirs(output_dir, exist_ok=True)
     date_tag = datetime.now(timezone.utc).strftime("%Y%m%d")
     destination_path = os.path.join(output_dir, f"{run_id}-{sdk}-{date_tag}.json")
     actual_toggle_totals = summarize_toggle_totals(store.seen_metrics)
     assertions = {
         "metricsToggleTotals": build_assertions(store.expected_data or {}, actual_toggle_totals),
+        "operationResults": build_operation_results_assertion(store.tests_data or [], report_body),
     }
     payload = {
         "runId": run_id,
@@ -108,6 +188,7 @@ def ingest_report():
             run_id,
             sdk.strip(),
             current_app.config["REPORT_OUTPUT_DIR"],
+            body,
         )
     except Exception as error:
         return jsonify({"error": f"Failed to persist report: {error}"}), 500

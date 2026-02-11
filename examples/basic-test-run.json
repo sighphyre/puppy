@@ -30,13 +30,19 @@
           "toggleName": "demoToggle",
           "context": {
             "userId": "123"
-          }
+          },
+          "expectedResult": true
         },
         {
           "op": "getVariant",
           "toggleName": "demoToggle",
           "context": {
             "userId": "123"
+          },
+          "expectedResult": {
+            "name": "disabled",
+            "enabled": false,
+            "payload": null
           }
         },
         {
@@ -44,13 +50,19 @@
           "toggleName": "missingToggle",
           "context": {
             "userId": "123"
-          }
+          },
+          "expectedResult": false
         },
         {
           "op": "getVariant",
           "toggleName": "missingToggle",
           "context": {
             "userId": "123"
+          },
+          "expectedResult": {
+            "name": "disabled",
+            "enabled": false,
+            "payload": null
           }
         }
       ]

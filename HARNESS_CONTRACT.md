@@ -31,7 +31,8 @@ Define a consistent, SDK-agnostic format for driving SDK behavior and capturing 
           "op": "isEnabled",
           "toggleName": "string",
           "context": { "userId": "1" },
-          "defaultValue": false
+          "defaultValue": false,
+          "expectedResult": true
         }
       ]
     }
@@ -45,6 +46,7 @@ Define a consistent, SDK-agnostic format for driving SDK behavior and capturing 
   - `toggleName` (string, required)
   - `context` (object, required)
   - `defaultValue` (boolean, optional)
+  - `expectedResult` (boolean, optional)
 - **Output**
   - `result` (boolean)
 
@@ -56,6 +58,10 @@ Define a consistent, SDK-agnostic format for driving SDK behavior and capturing 
     - `name` (string)
     - `enabled` (boolean)
     - `payload` (object or null)
+  - `expectedResult` (object, optional)
+    - `name` (string, required)
+    - `enabled` (boolean, required)
+    - `payload` (object or null, optional)
 - **Output**
   - `result` (object)
     - `name` (string)

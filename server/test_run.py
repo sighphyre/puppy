@@ -45,6 +45,31 @@ def validate_test_run(data):
                 isinstance(step.get("context"), dict),
                 f"Step op '{op}' requires a context object.",
             )
+            if "expectedResult" in step:
+                expected_result = step["expectedResult"]
+                if op == "isEnabled":
+                    _require(
+                        isinstance(expected_result, bool),
+                        "isEnabled expectedResult must be a boolean.",
+                    )
+                elif op == "getVariant":
+                    _require(
+                        isinstance(expected_result, dict),
+                        "getVariant expectedResult must be an object.",
+                    )
+                    _require(
+                        isinstance(expected_result.get("name"), str) and expected_result["name"].strip(),
+                        "getVariant expectedResult.name must be a non-empty string.",
+                    )
+                    _require(
+                        isinstance(expected_result.get("enabled"), bool),
+                        "getVariant expectedResult.enabled must be a boolean.",
+                    )
+                    payload = expected_result.get("payload")
+                    _require(
+                        payload is None or isinstance(payload, dict),
+                        "getVariant expectedResult.payload must be an object or null.",
+                    )
 
     expected = data.get("expected", {})
     _require(isinstance(expected, dict), "Test run 'expected' must be an object when provided.")

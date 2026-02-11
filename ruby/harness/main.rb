@@ -6,7 +6,7 @@ require 'logger'
 require 'net/http'
 require 'uri'
 
-INITIAL_FETCH_TIMEOUT_MS = 2000
+INITIAL_FETCH_TIMEOUT_MS = 500
 
 class NullLogger < Logger
   def initialize(*args)

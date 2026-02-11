@@ -12,6 +12,7 @@ class InMemoryState:
         self.seen_metrics = {}
         self.seen_registrations = {}
         self.seen_reports = {}
+        self.features_poll_trace = []
 
     def add_batch_to(self, container, data, key):
         if data is None:
@@ -19,6 +20,11 @@ class InMemoryState:
         if key not in container:
             container[key] = []
         container[key].append(data)
+
+    def add_features_poll_trace(self, data):
+        if data is None:
+            return
+        self.features_poll_trace.append(data)
 
 state_api = Blueprint("state_api", __name__)
 

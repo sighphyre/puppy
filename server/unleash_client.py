@@ -1,4 +1,5 @@
-from flask import Blueprint, jsonify, make_response, request, current_app
+from flask import Blueprint, current_app, jsonify, make_response, request
+from datetime import datetime, timezone
 import hashlib
 import json
 
@@ -14,13 +15,28 @@ def generate_etag(data):
 @unleash_client_api.route("/api/client/features")
 def features():
     store = current_app.config["PUPPY_STORE"]
-    if store.features_data is not None:
-        etag = generate_etag(store.features_data)
-        response = make_response(jsonify(store.features_data))
-        response.headers["ETag"] = etag
-        return response
-    else:
+    if store.features_data is None:
         return jsonify({"error": "No data available"}), 404
+
+    etag = generate_etag(store.features_data)
+    if_none_match = request.headers.get("If-None-Match")
+    authorization = request.headers.get("Authorization")
+    if if_none_match == etag:
+        response = make_response("", 304)
+    else:
+        response = make_response(jsonify(store.features_data), 200)
+    response.headers["ETag"] = etag
+
+    store.add_features_poll_trace(
+        {
+            "timestamp": datetime.now(timezone.utc).isoformat(),
+            "authorization": authorization,
+            "ifNoneMatch": if_none_match,
+            "responseStatus": response.status_code,
+            "responseEtag": etag,
+        }
+    )
+    return response
 
 
 @unleash_client_api.route("/api/client/register", methods=["POST"])

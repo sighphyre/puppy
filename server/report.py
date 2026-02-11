@@ -161,6 +161,7 @@ def persist_reports(store, run_id, sdk, output_dir, report_body):
         "sdk": sdk,
         "date": date_tag,
         "reports": store.seen_reports.get(run_id, []),
+        "featuresPollTrace": store.features_poll_trace,
         "metrics": store.seen_metrics,
         "metricsToggleTotals": actual_toggle_totals,
         "registrations": store.seen_registrations,
